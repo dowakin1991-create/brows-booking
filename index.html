@@ -3,75 +3,74 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Запис до LYANA ZAHRAI</title>
+    <title>LYANA ZAHRAI | Запис</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #fdf5f5; color: #4a4a4a; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; padding: 20px; box-sizing: border-box; }
-        .booking-container { background-color: #ffffff; padding: 30px; border-radius: 12px; box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05); width: 100%; max-width: 400px; text-align: center; }
-        .logo-container { margin-bottom: 20px; }
-        .logo { max-width: 150px; border-radius: 50%; }
-        h2 { color: #b5838d; margin-bottom: 20px; }
-        .form-group { margin-bottom: 15px; text-align: left; }
-        label { display: block; margin-bottom: 5px; font-weight: 600; font-size: 14px; }
-        input, select { width: 100%; padding: 10px; border: 1px solid #e0e0e0; border-radius: 6px; box-sizing: border-box; font-size: 14px; }
-        input:focus, select:focus { border-color: #b5838d; outline: none; }
-        button { width: 100%; padding: 12px; background-color: #b5838d; color: #ffffff; border: none; border-radius: 6px; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 10px; }
-        button:hover { background-color: #a0737d; }
-        .success-message { display: none; text-align: center; color: #6d9773; font-weight: bold; padding: 20px 0; }
-        option:disabled { color: #ccc; }
+        /* Преміальний чорно-білий дизайн з оптимізацією під 120Hz */
+        :root { --bg-color: #ffffff; --text-color: #111111; --border-color: #e5e5e5; --accent-color: #000000; --hover-bg: #f9f9f9; }
+        body { font-family: 'Inter', sans-serif; background-color: var(--bg-color); color: var(--text-color); display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; padding: 20px; box-sizing: border-box; -webkit-font-smoothing: antialiased; }
+        .booking-container { background-color: var(--bg-color); padding: 40px; border-radius: 0px; /* Гострі кути для строгості */ border: 1px solid var(--border-color); width: 100%; max-width: 420px; text-align: center; }
+        .logo-container { margin-bottom: 30px; }
+        .logo { max-width: 120px; border-radius: 50%; }
+        h2 { font-weight: 600; font-size: 22px; margin-bottom: 25px; letter-spacing: -0.5px; text-transform: uppercase; }
+        .form-group { margin-bottom: 20px; text-align: left; }
+        label { display: block; margin-bottom: 8px; font-weight: 500; font-size: 13px; color: #555; text-transform: uppercase; letter-spacing: 0.5px; }
+        input, select { width: 100%; padding: 14px; border: 1px solid var(--border-color); background-color: var(--bg-color); color: var(--text-color); box-sizing: border-box; font-size: 15px; font-family: 'Inter', sans-serif; transition: border-color 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94); /* Плавність 120Hz */ will-change: border-color; }
+        input:focus, select:focus { border-color: var(--accent-color); outline: none; }
+        button { width: 100%; padding: 16px; background-color: var(--accent-color); color: #ffffff; border: none; font-size: 15px; font-weight: 600; font-family: 'Inter', sans-serif; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; margin-top: 15px; transition: transform 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94), background-color 0.2s; will-change: transform; }
+        button:hover { background-color: #333333; transform: translateY(-2px); }
+        button:active { transform: translateY(0); }
+        .success-message { display: none; text-align: center; color: var(--accent-color); font-weight: 500; padding: 30px 0; font-size: 15px; line-height: 1.5; }
+        option:disabled { color: #999; }
+        /* Анімація завантаження */
+        .loader { display: none; margin-top: 15px; font-size: 13px; color: #666; }
     </style>
 </head>
 <body>
 
     <div class="booking-container">
         <div class="logo-container">
-            <img src="IMG_9581.png" alt="LYANA ZAHRAI Logo" class="logo">
+            <img src="IMG_9581.png" alt="LYANA ZAHRAI" class="logo">
         </div>
-        <h2>Запис на брівки ✨</h2>
+        <h2>Оформлення запису</h2>
         
         <form id="bookingForm">
             <div class="form-group">
-                <label for="name">Ваше ім'я:</label>
-                <input type="text" id="name" required>
+                <label for="name">Ім'я та прізвище</label>
+                <input type="text" id="name" placeholder="Введіть ваше ім'я" required>
             </div>
             <div class="form-group">
-                <label for="phone">Номер телефону:</label>
-                <input type="tel" id="phone" required>
+                <label for="phone">Контактний номер</label>
+                <input type="tel" id="phone" placeholder="+38 (000) 000-00-00" required>
             </div>
             <div class="form-group">
-                <label for="service">Послуга:</label>
+                <label for="service">Послуга</label>
                 <select id="service" required>
-                    <option value="" disabled selected>Оберіть послугу</option>
-                    <option value="Корекція">Корекція брів</option>
-                    <option value="Фарбування">Фарбування</option>
-                    <option value="Комплекс">Комплекс</option>
+                    <option value="" disabled selected>Завантаження послуг...</option>
                 </select>
             </div>
             <div class="form-group">
-                <label for="date">Дата:</label>
+                <label for="date">Дата</label>
                 <input type="date" id="date" required>
             </div>
             <div class="form-group">
-                <label for="time">Зручний час:</label>
+                <label for="time">Час</label>
                 <select id="time" required disabled>
                     <option value="" disabled selected>Спочатку оберіть дату</option>
-                    <option value="10:00">10:00</option>
-                    <option value="11:30">11:30</option>
-                    <option value="13:00">13:00</option>
-                    <option value="14:30">14:30</option>
-                    <option value="16:00">16:00</option>
-                    <option value="17:30">17:30</option>
                 </select>
             </div>
-            <button type="submit">Записатися</button>
+            <button type="submit" id="submitBtn">Надіслати запит</button>
+            <div class="loader" id="loader">Обробка запиту...</div>
         </form>
-        <div id="successMessage" class="success-message">Запис успішний! Чекаю на вас, 🤍</div>
+        <div id="successMessage" class="success-message">
+            Ваш запит надіслано.<br><br>Адміністратор перевірить вільні години та підтвердить запис найближчим часом.
+        </div>
     </div>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
         import { getFirestore, collection, addDoc, query, where, getDocs } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore.js";
 
-        // Використовуємо ваші реальні ключі Firebase
         const firebaseConfig = {
             apiKey: "AIzaSyC6MUwETUwJzJlp5YEH4fMR_GmDe5GFhoM",
             authDomain: "brows-bookin.firebaseapp.com",
@@ -84,29 +83,66 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
+        // НАЛАШТУВАННЯ TELEGRAM БОТА
+        const TELEGRAM_BOT_TOKEN = 'ВАШ_ТОКЕН_БОТА'; // Замініть на токен
+        const TELEGRAM_CHAT_ID = 'ВАШ_ID_ЧАТУ'; // Замініть на ваш ID
+
+        const serviceSelect = document.getElementById('service');
         const dateInput = document.getElementById('date');
         const timeSelect = document.getElementById('time');
 
-        // Логіка перевірки зайнятих годин
+        // Завантаження послуг з бази
+        async function loadServices() {
+            const q = query(collection(db, "services"));
+            const querySnapshot = await getDocs(q);
+            serviceSelect.innerHTML = '<option value="" disabled selected>Оберіть послугу</option>';
+            querySnapshot.forEach((doc) => {
+                const data = doc.data();
+                serviceSelect.innerHTML += `<option value="${data.name}">${data.name} — ${data.price} грн</option>`;
+            });
+            if(querySnapshot.empty) {
+                serviceSelect.innerHTML = '<option value="" disabled selected>Немає доступних послуг</option>';
+            }
+        }
+        loadServices();
+
+        // Завантаження робочих годин з бази
+        let workingHours = [];
+        async function loadSettings() {
+            const q = query(collection(db, "settings"));
+            const querySnapshot = await getDocs(q);
+            querySnapshot.forEach((doc) => {
+                if(doc.id === 'hours') workingHours = doc.data().list || [];
+            });
+        }
+        loadSettings();
+
+        // Логіка перевірки годин
         dateInput.addEventListener('change', async function() {
             const selectedDate = this.value;
             timeSelect.disabled = true;
-            timeSelect.options[0].text = "Перевірка вільних годин...";
+            timeSelect.innerHTML = '<option value="" disabled selected>Перевірка вільних годин...</option>';
 
-            for (let i = 1; i < timeSelect.options.length; i++) {
-                timeSelect.options[i].disabled = false;
-                timeSelect.options[i].text = timeSelect.options[i].value;
+            if (workingHours.length === 0) {
+                timeSelect.innerHTML = '<option value="" disabled selected>Графік не налаштовано</option>';
+                return;
             }
+
+            workingHours.forEach(hour => {
+                timeSelect.innerHTML += `<option value="${hour}">${hour}</option>`;
+            });
 
             const q = query(collection(db, "bookings"), where("date", "==", selectedDate));
             const querySnapshot = await getDocs(q);
             
             querySnapshot.forEach((doc) => {
-                const bookedTime = doc.data().time;
-                for (let i = 1; i < timeSelect.options.length; i++) {
-                    if (timeSelect.options[i].value === bookedTime) {
-                        timeSelect.options[i].disabled = true;
-                        timeSelect.options[i].text += " (Зайнято)";
+                const data = doc.data();
+                if(data.status !== 'cancelled') { // Блокуємо лише підтверджені або в очікуванні
+                    for (let i = 1; i < timeSelect.options.length; i++) {
+                        if (timeSelect.options[i].value === data.time) {
+                            timeSelect.options[i].disabled = true;
+                            timeSelect.options[i].text += " (Зайнято)";
+                        }
                     }
                 }
             });
@@ -115,9 +151,11 @@
             timeSelect.options[0].text = "Оберіть вільний час";
         });
 
-        // Логіка відправки форми
+        // Відправка форми
         document.getElementById('bookingForm').addEventListener('submit', async function(event) {
             event.preventDefault();
+            document.getElementById('submitBtn').style.display = 'none';
+            document.getElementById('loader').style.display = 'block';
             
             const bookingData = {
                 name: document.getElementById('name').value,
@@ -125,16 +163,29 @@
                 service: document.getElementById('service').value,
                 date: document.getElementById('date').value,
                 time: document.getElementById('time').value,
+                status: 'pending', // Статус "В очікуванні"
                 timestamp: new Date()
             };
 
             try {
                 await addDoc(collection(db, "bookings"), bookingData);
-                this.style.display = 'none';
+                
+                // Відправка в Telegram
+                if(TELEGRAM_BOT_TOKEN !== 'ВАШ_ТОКЕН_БОТА') {
+                    const msg = `🔔 *НОВИЙ ЗАПИТ НА ЗАПИС*\n\n👤 Клієнт: ${bookingData.name}\n📞 Тел: ${bookingData.phone}\n✂️ Послуга: ${bookingData.service}\n📅 Дата: ${bookingData.date}\n⏰ Час: ${bookingData.time}\n\nЗайдіть в панель адміністратора, щоб підтвердити або скасувати.`;
+                    fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+                        method: 'POST',
+                        headers: {'Content-Type': 'application/json'},
+                        body: JSON.stringify({ chat_id: TELEGRAM_CHAT_ID, text: msg, parse_mode: 'Markdown' })
+                    });
+                }
+
+                document.getElementById('bookingForm').style.display = 'none';
                 document.getElementById('successMessage').style.display = 'block';
             } catch (e) {
-                alert("Помилка запису. Спробуйте ще раз.");
-                console.error("Error adding document: ", e);
+                alert("Виникла помилка. Спробуйте пізніше.");
+                document.getElementById('submitBtn').style.display = 'block';
+                document.getElementById('loader').style.display = 'none';
             }
         });
     </script>
