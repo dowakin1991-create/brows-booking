@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Запис до LYANA ZAHRAI</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #fdf5f5; color: #4a4a4a; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; padding: 20px; box-sizing: border-box; }
+        .booking-container { background-color: #ffffff; padding: 30px; border-radius: 12px; box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05); width: 100%; max-width: 400px; text-align: center; }
+        .logo-container { margin-bottom: 20px; }
+        .logo { max-width: 150px; border-radius: 50%; }
+        h2 { color: #b5838d; margin-bottom: 20px; }
+        .form-group { margin-bottom: 15px; text-align: left; }
+        label { display: block; margin-bottom: 5px; font-weight: 600; font-size: 14px; }
+        input, select { width: 100%; padding: 10px; border: 1px solid #e0e0e0; border-radius: 6px; box-sizing: border-box; font-size: 14px; }
+        input:focus, select:focus { border-color: #b5838d; outline: none; }
+        button { width: 100%; padding: 12px; background-color: #b5838d; color: #ffffff; border: none; border-radius: 6px; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 10px; }
+        button:hover { background-color: #a0737d; }
+        .success-message { display: none; text-align: center; color: #6d9773; font-weight: bold; padding: 20px 0; }
+        option:disabled { color: #ccc; }
+    </style>
+</head>
+<body>
+
+    <div class="booking-container">
+        <div class="logo-container">
+            <img src="logo.png" alt="LYANA ZAHRAI Logo" class="logo">
+        </div>
+        <h2>Запис на брівки ✨</h2>
+        
+        <form id="bookingForm">
+            <div class="form-group">
+                <label for="name">Ваше ім'я:</label>
+                <input type="text" id="name" required>
+            </div>
+            <div class="form-group">
+                <label for="phone">Номер телефону:</label>
+                <input type="tel" id="phone" required>
+            </div>
+            <div class="form-group">
+                <label for="service">Послуга:</label>
+                <select id="service" required>
+                    <option value="" disabled selected>Оберіть послугу</option>
+                    <option value="Корекція">Корекція брів</option>
+                    <option value="Фарбування">Фарбування</option>
+                    <option value="Комплекс">Комплекс</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="date">Дата:</label>
+                <input type="date" id="date" required>
+            </div>
+            <div class="form-group">
+                <label for="time">Зручний час:</label>
+                <select id="time" required disabled>
+                    <option value="" disabled selected>Спочатку оберіть дату</option>
+                    <option value="10:00">10:00</option>
+                    <option value="11:30">11:30</option>
+                    <option value="13:00">13:00</option>
+                    <option value="14:30">14:30</option>
+                    <option value="16:00">16:00</option>
+                    <option value="17:30">17:30</option>
+                </select>
+            </div>
+            <button type="submit">Записатися</button>
+        </form>
+        <div id="successMessage" class="success-message">Запис успішний! Чекаю на вас, 🤍</div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
+        import { getFirestore, collection, addDoc, query, where, getDocs } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore.js";
+
+        // Використовуємо ваші реальні ключі Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyC6MUwETUwJzJlp5YEH4fMR_GmDe5GFhoM",
+            authDomain: "brows-bookin.firebaseapp.com",
+            projectId: "brows-bookin",
+            storageBucket: "brows-bookin.firebasestorage.app",
+            messagingSenderId: "445308062920",
+            appId: "1:445308062920:web:05728753f8391feeae69fd"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        const dateInput = document.getElementById('date');
+        const timeSelect = document.getElementById('time');
+
+        dateInput.addEventListener('change', async function() {
+            const selectedDate = this.value;
+            timeSelect.disabled = true;
+            timeSelect.options[0].text = "Перевірка вільних годин...";
+
+            for (let i = 1; i < timeSelect.options.length; i++) {
+                timeSelect.options[i].disabled = false;
+                timeSelect.options[i].text = timeSelect.options[i].value;
+            }
+
+            const q = query(collection(db, "bookings"), where("date", "==", selectedDate));
+            const querySnapshot = await getDocs(q);
+            
+            querySnapshot.forEach((doc) => {
+                const bookedTime = doc.data().time;
+                for (let i = 1; i < timeSelect.options.length; i++) {
+                    if (timeSelect.options[i].value === bookedTime) {
+                        timeSelect.options[i].disabled = true;
+                        timeSelect.options[i].text += " (Зайнято)";
+                    }
+                }
+            });
+
+            timeSelect.disabled = false;
+            timeSelect.options[0].text = "Оберіть вільний час";
+        });
+
+        document.getElementById('bookingForm').addEventListener('submit', async function(event) {
+            event.preventDefault();
+            
+            const bookingData = {
+                name: document.getElementById('name').value,
+                phone: document.getElementById('phone').value,
+                service: document.getElementById('service').value,
+                date: document.getElementById('date').value,
+                time: document.getElementById('time').value,
+                timestamp: new Date()
+            };
+
+            try {
+                await addDoc(collection(db, "bookings"), bookingData);
+                this.style.display = 'none';
+                document.getElementById('successMessage').style.display = 'block';
+            } catch (e) {
+                alert("Помилка запису. Спробуйте ще раз.");
+                console.error("Error adding document: ", e);
+            }
+        });
+    </script>
+</body>
+</html>
