@@ -87,6 +87,7 @@
         const dateInput = document.getElementById('date');
         const timeSelect = document.getElementById('time');
 
+        // Логіка перевірки зайнятих годин
         dateInput.addEventListener('change', async function() {
             const selectedDate = this.value;
             timeSelect.disabled = true;
@@ -114,6 +115,7 @@
             timeSelect.options[0].text = "Оберіть вільний час";
         });
 
+        // Логіка відправки форми
         document.getElementById('bookingForm').addEventListener('submit', async function(event) {
             event.preventDefault();
             
