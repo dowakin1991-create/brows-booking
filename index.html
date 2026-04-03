@@ -149,10 +149,10 @@
                     const phone = docSnap.data().phone;
                     contactInfo.innerHTML = `Адміністрація: <a href="tel:${phone.replace(/\D/g,'')}">${phone}</a>`;
                 } else {
-                    contactInfo.innerHTML = `LYANA ZAHRAI Брови та Вії`;
+                    contactInfo.innerHTML = `LYANA ZAHRAI Брови`;
                 }
             } catch (e) {
-                contactInfo.innerHTML = `LYANA ZAHRAI Брови та Вії`;
+                contactInfo.innerHTML = `LYANA ZAHRAI Брови`;
             }
         }
         loadAdminContact();
