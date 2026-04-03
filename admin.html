@@ -2,39 +2,60 @@
 <html lang="uk">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Панель Управління | LYANA ZAHRAI</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Адмінка | LYANA ZAHRAI</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
-        :root { --bg-color: #f5f5f5; --surface: #ffffff; --text-color: #111111; --border-color: #e0e0e0; --accent: #000000; --green: #2ecc71; --red: #e74c3c; }
-        body { font-family: 'Inter', sans-serif; background-color: var(--bg-color); color: var(--text-color); margin: 0; padding: 20px; }
-        .admin-container { max-width: 1000px; margin: 0 auto; }
-        .header { display: flex; align-items: center; margin-bottom: 30px; gap: 20px; }
-        .logo { width: 60px; border-radius: 50%; }
-        h1 { font-weight: 600; font-size: 24px; margin: 0; }
+        :root { --bg-color: #f5f5f5; --surface: #ffffff; --text-color: #111111; --border-color: #e0e0e0; --accent: #000000; --green: #2ecc71; --red: #e74c3c; --ease: cubic-bezier(0.25, 0.46, 0.45, 0.94); }
+        body, html { margin: 0; padding: 0; font-family: 'Inter', sans-serif; background-color: var(--bg-color); color: var(--text-color); -webkit-font-smoothing: antialiased; -webkit-tap-highlight-color: transparent; }
+        .admin-container { max-width: 1000px; margin: 0 auto; padding: 20px; box-sizing: border-box; }
         
-        .tabs { display: flex; gap: 10px; margin-bottom: 20px; }
-        .tab { padding: 10px 20px; cursor: pointer; background: var(--border-color); border-radius: 4px; font-weight: 500; }
+        /* ХЕДЕР */
+        .header { display: flex; align-items: center; margin-bottom: 30px; gap: 20px; border-bottom: 1px solid var(--border-color); padding-bottom: 20px; }
+        .logo { width: 60px; border-radius: 50%; }
+        h1 { font-weight: 600; font-size: 22px; margin: 0; text-transform: uppercase; letter-spacing: -0.5px; }
+        
+        /* ВКЛАДКИ */
+        .tabs { display: flex; gap: 10px; margin-bottom: 20px; overflow-x: auto; padding-bottom: 5px; -webkit-overflow-scrolling: touch; }
+        .tab { padding: 10px 18px; cursor: pointer; background: #e9e9e9; border-radius: 2px; font-weight: 500; font-size: 14px; white-space: nowrap; transition: 0.2s var(--ease); }
         .tab.active { background: var(--accent); color: white; }
         
-        .section { background: var(--surface); padding: 20px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); display: none; }
+        /* СЕКЦІЇ */
+        .section { background: var(--surface); padding: 25px; border-radius: 4px; border: 1px solid var(--border-color); display: none; will-change: opacity, transform; animation: sectionFadeIn 0.3s var(--ease); }
+        @keyframes sectionFadeIn { 0% { opacity: 0; transform: translateY(10px); } 100% { opacity: 1; transform: translateY(0); } }
         .section.active { display: block; }
+        h2 { font-weight: 600; font-size: 18px; margin-top: 0; margin-bottom: 20px; }
         
+        /* ТАБЛИЦІ */
         table { width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 14px; }
-        th, td { padding: 12px; border-bottom: 1px solid var(--border-color); text-align: left; }
-        th { font-weight: 600; color: #555; text-transform: uppercase; font-size: 12px; }
+        th, td { padding: 14px; border-bottom: 1px solid var(--border-color); text-align: left; }
+        th { font-weight: 600; color: #555; text-transform: uppercase; font-size: 11px; letter-spacing: 0.5px; }
         
+        /* СТАТУСИ */
         .status-pending { color: #f39c12; font-weight: 600; }
         .status-confirmed { color: var(--green); font-weight: 600; }
         .status-cancelled { color: var(--red); text-decoration: line-through; }
         
-        button { padding: 8px 16px; border: none; border-radius: 4px; cursor: pointer; font-family: 'Inter'; font-weight: 500; transition: 0.2s; }
+        /* КНОПКИ */
+        button { padding: 10px 18px; border: none; border-radius: 2px; cursor: pointer; font-family: 'Inter'; font-weight: 600; font-size: 13px; text-transform: uppercase; letter-spacing: 0.5px; transition: 0.1s var(--ease); will-change: transform, background-color; }
         .btn-approve { background: var(--green); color: white; margin-right: 5px; }
+        .btn-approve:hover { background: #27ae60; }
         .btn-reject { background: var(--red); color: white; }
-        .btn-add { background: var(--accent); color: white; margin-top: 10px; }
+        .btn-reject:hover { background: #c0392b; }
+        .btn-add { background: var(--accent); color: white; }
+        .btn-add:hover { background: #333; }
+        button:active { transform: scale(0.98); }
         
-        .form-row { display: flex; gap: 10px; margin-bottom: 15px; }
-        input { padding: 10px; border: 1px solid var(--border-color); border-radius: 4px; width: 100%; font-family: 'Inter'; }
+        /* ФОРМИ */
+        .form-row { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
+        input { padding: 12px; border: 1px solid var(--border-color); border-radius: 2px; width: 100%; font-family: 'Inter'; box-sizing: border-box; }
+        input:focus { border-color: var(--accent); outline: none; }
+        
+        @media (max-width: 600px) {
+            th, td { padding: 8px; font-size: 12px; }
+            button { padding: 6px 10px; font-size: 11px; }
+            .form-row { flex-direction: column; }
+        }
     </style>
 </head>
 <body>
@@ -42,20 +63,21 @@
     <div class="admin-container">
         <div class="header">
             <img src="IMG_9581.png" alt="Logo" class="logo">
-            <h1>Панель адміністратора</h1>
+            <h1>Управління записом</h1>
         </div>
 
         <div class="tabs">
-            <div class="tab active" onclick="switchTab('bookings')">Клієнти та Записи</div>
+            <div class="tab active" onclick="switchTab('bookings')">Клієнти</div>
             <div class="tab" onclick="switchTab('services')">Послуги</div>
-            <div class="tab" onclick="switchTab('hours')">Робочі години</div>
+            <div class="tab" onclick="switchTab('hours')">Графік</div>
+            <div class="tab" onclick="switchTab('settings')">Налаштування</div>
         </div>
 
         <div id="bookings" class="section active">
-            <h2>Список записів</h2>
+            <h2>Останні запити</h2>
             <table>
                 <thead>
-                    <tr><th>Дата і Час</th><th>Клієнт</th><th>Послуга</th><th>Статус</th><th>Дія</th></tr>
+                    <tr><th>Дата / Час</th><th>Клієнт</th><th>Послуга</th><th>Статус</th><th>Дія</th></tr>
                 </thead>
                 <tbody id="bookingsTable"><tr><td colspan="5">Завантаження...</td></tr></tbody>
             </table>
@@ -64,7 +86,7 @@
         <div id="services" class="section">
             <h2>Керування послугами</h2>
             <div class="form-row">
-                <input type="text" id="newServiceName" placeholder="Назва послуги (напр. Корекція брів)">
+                <input type="text" id="newServiceName" placeholder="Назва (напр. Корекція брів)">
                 <input type="number" id="newServicePrice" placeholder="Ціна (грн)">
                 <button class="btn-add" onclick="addService()">Додати</button>
             </div>
@@ -76,10 +98,19 @@
 
         <div id="hours" class="section">
             <h2>Налаштування графіку</h2>
-            <p style="font-size: 13px; color: #666;">Введіть години через кому (наприклад: 10:00, 11:30, 13:00)</p>
+            <p style="font-size: 13px; color: #666; margin-bottom: 15px;">Введіть години через кому (наприклад: 10:00, 11:30, 13:00, 15:00, 16:30)</p>
             <div class="form-row">
-                <input type="text" id="hoursInput" placeholder="10:00, 11:00, 12:00...">
-                <button class="btn-add" onclick="saveHours()">Зберегти графік</button>
+                <input type="text" id="hoursInput" placeholder="10:00, 11:00...">
+                <button class="btn-add" onclick="saveHours()">Зберегти</button>
+            </div>
+        </div>
+
+        <div id="settings" class="section">
+            <h2>Загальні налаштування</h2>
+            <p style="font-size: 13px; color: #666; margin-bottom: 15px;">Це телефон, який клієнти бачитимуть у заголовку сторінки запису.</p>
+            <div class="form-row">
+                <input type="text" id="contactPhoneInput" placeholder="+38 (000) 000-00-00">
+                <button class="btn-add" onclick="saveContact()">Зберегти</button>
             </div>
         </div>
 
@@ -89,6 +120,7 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
         import { getFirestore, collection, getDocs, orderBy, query, doc, updateDoc, addDoc, deleteDoc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore.js";
 
+        // КОНФІГ Firebase (вже заповнений)
         const firebaseConfig = {
             apiKey: "AIzaSyC6MUwETUwJzJlp5YEH4fMR_GmDe5GFhoM",
             authDomain: "brows-bookin.firebaseapp.com",
@@ -112,85 +144,120 @@
         // ЗАВАНТАЖЕННЯ ЗАПИСІВ
         async function loadBookings() {
             const tbody = document.getElementById('bookingsTable');
-            const q = query(collection(db, "bookings"), orderBy("date", "desc"));
-            const snapshot = await getDocs(q);
-            tbody.innerHTML = '';
-            snapshot.forEach(doc => {
-                const d = doc.data();
-                let statusText = d.status === 'pending' ? '<span class="status-pending">Очікує</span>' : 
-                                 d.status === 'confirmed' ? '<span class="status-confirmed">Підтверджено</span>' : 
-                                 '<span class="status-cancelled">Скасовано</span>';
-                
-                let actions = d.status === 'pending' ? 
-                    `<button class="btn-approve" onclick="updateStatus('${doc.id}', 'confirmed')">✓</button>
-                     <button class="btn-reject" onclick="updateStatus('${doc.id}', 'cancelled')">✗</button>` : 
-                     (d.status === 'confirmed' ? `<button class="btn-reject" onclick="updateStatus('${doc.id}', 'cancelled')">Скасувати</button>` : '');
+            try {
+                const q = query(collection(db, "bookings"), orderBy("date", "desc"));
+                const snapshot = await getDocs(q);
+                tbody.innerHTML = '';
+                snapshot.forEach(doc => {
+                    const d = doc.data();
+                    let statusText = d.status === 'pending' ? '<span class="status-pending">Очікує</span>' : 
+                                     d.status === 'confirmed' ? '<span class="status-confirmed">Підтверджено</span>' : 
+                                     '<span class="status-cancelled">Скасовано</span>';
+                    
+                    let actions = d.status === 'pending' ? 
+                        `<button class="btn-approve" onclick="updateStatus('${doc.id}', 'confirmed')">✓</button>
+                         <button class="btn-reject" onclick="updateStatus('${doc.id}', 'cancelled')">✗</button>` : 
+                         (d.status === 'confirmed' ? `<button class="btn-reject" onclick="updateStatus('${doc.id}', 'cancelled')">Скасувати</button>` : '');
 
-                tbody.innerHTML += `<tr>
-                    <td><strong>${d.date}</strong><br>${d.time}</td>
-                    <td>${d.name}<br><a href="tel:${d.phone}" style="color:var(--text-color);">${d.phone}</a></td>
-                    <td>${d.service}</td>
-                    <td>${statusText}</td>
-                    <td>${actions}</td>
-                </tr>`;
-            });
+                    tbody.innerHTML += `<tr>
+                        <td><strong>${d.date}</strong><br>${d.time}</td>
+                        <td>${d.name}<br><a href="tel:${d.phone}" style="color:var(--text-color); font-weight:500;">${d.phone}</a></td>
+                        <td>${d.service}</td>
+                        <td>${statusText}</td>
+                        <td>${actions}</td>
+                    </tr>`;
+                });
+                if(snapshot.empty) tbody.innerHTML = '<tr><td colspan="5">Записів немає</td></tr>';
+            } catch (e) { tbody.innerHTML = '<tr><td colspan="5">Помилка завантаження</td></tr>'; }
         }
 
         // ОНОВЛЕННЯ СТАТУСУ
         window.updateStatus = async function(id, newStatus) {
-            await updateDoc(doc(db, "bookings", id), { status: newStatus });
-            loadBookings();
+            try {
+                await updateDoc(doc(db, "bookings", id), { status: newStatus });
+                loadBookings();
+            } catch (e) { alert('Помилка оновлення статусу'); }
         }
 
         // ПОСЛУГИ
         async function loadServices() {
             const tbody = document.getElementById('servicesTable');
-            const snapshot = await getDocs(collection(db, "services"));
-            tbody.innerHTML = '';
-            snapshot.forEach(doc => {
-                const d = doc.data();
-                tbody.innerHTML += `<tr>
-                    <td>${d.name}</td><td>${d.price} грн</td>
-                    <td><button class="btn-reject" onclick="deleteService('${doc.id}')">Видалити</button></td>
-                </tr>`;
-            });
+            try {
+                const snapshot = await getDocs(collection(db, "services"));
+                tbody.innerHTML = '';
+                snapshot.forEach(doc => {
+                    const d = doc.data();
+                    tbody.innerHTML += `<tr>
+                        <td>${d.name}</td><td><strong>${d.price} грн</strong></td>
+                        <td><button class="btn-reject" onclick="deleteService('${doc.id}')">Видалити</button></td>
+                    </tr>`;
+                });
+                if(snapshot.empty) tbody.innerHTML = '<tr><td colspan="3">Додайте першу послугу</td></tr>';
+            } catch (e) { tbody.innerHTML = '<tr><td colspan="3">Помилка</td></tr>'; }
         }
 
         window.addService = async function() {
             const name = document.getElementById('newServiceName').value;
             const price = document.getElementById('newServicePrice').value;
             if(name && price) {
-                await addDoc(collection(db, "services"), { name, price });
-                document.getElementById('newServiceName').value = '';
-                document.getElementById('newServicePrice').value = '';
-                loadServices();
+                try {
+                    await addDoc(collection(db, "services"), { name, price: parseFloat(price) });
+                    document.getElementById('newServiceName').value = '';
+                    document.getElementById('newServicePrice').value = '';
+                    loadServices();
+                } catch (e) { alert('Помилка додавання послуги'); }
             }
         }
 
         window.deleteService = async function(id) {
-            await deleteDoc(doc(db, "services", id));
-            loadServices();
+            try {
+                await deleteDoc(doc(db, "services", id));
+                loadServices();
+            } catch (e) { alert('Помилка видалення послуги'); }
         }
 
         // ГОДИНИ
         async function loadHours() {
-            const docSnap = await getDoc(doc(db, "settings", "hours"));
-            if (docSnap.exists()) {
-                document.getElementById('hoursInput').value = docSnap.data().list.join(', ');
-            }
+            try {
+                const docSnap = await getDoc(doc(db, "settings", "hours"));
+                if (docSnap.exists()) {
+                    document.getElementById('hoursInput').value = docSnap.data().list.join(', ');
+                }
+            } catch (e) {}
         }
 
         window.saveHours = async function() {
             const input = document.getElementById('hoursInput').value;
             const hoursList = input.split(',').map(h => h.trim()).filter(h => h.length > 0);
-            await setDoc(doc(db, "settings", "hours"), { list: hoursList });
-            alert('Графік збережено!');
+            try {
+                await setDoc(doc(db, "settings", "hours"), { list: hoursList });
+                alert('Графік успішно збережено!');
+            } catch (e) { alert('Помилка збереження'); }
+        }
+
+        // НАЛАШТУВАННЯ КОНТАКТУ (НОВЕ)
+        async function loadContact() {
+            try {
+                const docSnap = await getDoc(doc(db, "settings", "contact"));
+                if (docSnap.exists()) {
+                    document.getElementById('contactPhoneInput').value = docSnap.data().phone;
+                }
+            } catch (e) {}
+        }
+
+        window.saveContact = async function() {
+            const input = document.getElementById('contactPhoneInput').value;
+            try {
+                await setDoc(doc(db, "settings", "contact"), { phone: input.trim() });
+                alert('Контактну інформацію оновлено!');
+            } catch (e) { alert('Помилка збереження контакту'); }
         }
 
         // Ініціалізація
         loadBookings();
         loadServices();
         loadHours();
+        loadContact();
     </script>
 </body>
 </html>
