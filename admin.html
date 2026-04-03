@@ -4,39 +4,42 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Адмінка | LYANA ZAHRAI</title>
+
+    <link rel="apple-touch-icon" href="IMG_9581.png">
+    <link rel="icon" type="image/png" href="IMG_9581.png">
+    <link rel="shortcut icon" href="IMG_9581.png">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Адмінка">
+    <meta name="theme-color" content="#f5f5f5">
+
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
         :root { --bg-color: #f5f5f5; --surface: #ffffff; --text-color: #111111; --border-color: #e0e0e0; --accent: #000000; --green: #2ecc71; --red: #e74c3c; --ease: cubic-bezier(0.25, 0.46, 0.45, 0.94); }
         body, html { margin: 0; padding: 0; font-family: 'Inter', sans-serif; background-color: var(--bg-color); color: var(--text-color); -webkit-font-smoothing: antialiased; -webkit-tap-highlight-color: transparent; }
-        .admin-container { max-width: 1000px; margin: 0 auto; padding: 20px; box-sizing: border-box; }
+        .admin-container { max-width: 1000px; margin: 0 auto; padding: 20px; box-sizing: border-box; padding-top: max(20px, env(safe-area-inset-top)); }
         
-        /* ХЕДЕР */
         .header { display: flex; align-items: center; margin-bottom: 30px; gap: 20px; border-bottom: 1px solid var(--border-color); padding-bottom: 20px; }
         .logo { width: 60px; border-radius: 50%; }
         h1 { font-weight: 600; font-size: 22px; margin: 0; text-transform: uppercase; letter-spacing: -0.5px; }
         
-        /* ВКЛАДКИ */
         .tabs { display: flex; gap: 10px; margin-bottom: 20px; overflow-x: auto; padding-bottom: 5px; -webkit-overflow-scrolling: touch; }
         .tab { padding: 10px 18px; cursor: pointer; background: #e9e9e9; border-radius: 2px; font-weight: 500; font-size: 14px; white-space: nowrap; transition: 0.2s var(--ease); }
         .tab.active { background: var(--accent); color: white; }
         
-        /* СЕКЦІЇ */
         .section { background: var(--surface); padding: 25px; border-radius: 4px; border: 1px solid var(--border-color); display: none; will-change: opacity, transform; animation: sectionFadeIn 0.3s var(--ease); }
         @keyframes sectionFadeIn { 0% { opacity: 0; transform: translateY(10px); } 100% { opacity: 1; transform: translateY(0); } }
         .section.active { display: block; }
         h2 { font-weight: 600; font-size: 18px; margin-top: 0; margin-bottom: 20px; }
         
-        /* ТАБЛИЦІ */
         table { width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 14px; }
         th, td { padding: 14px; border-bottom: 1px solid var(--border-color); text-align: left; }
         th { font-weight: 600; color: #555; text-transform: uppercase; font-size: 11px; letter-spacing: 0.5px; }
         
-        /* СТАТУСИ */
         .status-pending { color: #f39c12; font-weight: 600; }
         .status-confirmed { color: var(--green); font-weight: 600; }
         .status-cancelled { color: var(--red); text-decoration: line-through; }
         
-        /* КНОПКИ */
         button { padding: 10px 18px; border: none; border-radius: 2px; cursor: pointer; font-family: 'Inter'; font-weight: 600; font-size: 13px; text-transform: uppercase; letter-spacing: 0.5px; transition: 0.1s var(--ease); will-change: transform, background-color; }
         .btn-approve { background: var(--green); color: white; margin-right: 5px; }
         .btn-approve:hover { background: #27ae60; }
@@ -46,7 +49,6 @@
         .btn-add:hover { background: #333; }
         button:active { transform: scale(0.98); }
         
-        /* ФОРМИ */
         .form-row { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
         input { padding: 12px; border: 1px solid var(--border-color); border-radius: 2px; width: 100%; font-family: 'Inter'; box-sizing: border-box; }
         input:focus { border-color: var(--accent); outline: none; }
@@ -120,7 +122,6 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
         import { getFirestore, collection, getDocs, orderBy, query, doc, updateDoc, addDoc, deleteDoc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore.js";
 
-        // КОНФІГ Firebase (вже заповнений)
         const firebaseConfig = {
             apiKey: "AIzaSyC6MUwETUwJzJlp5YEH4fMR_GmDe5GFhoM",
             authDomain: "brows-bookin.firebaseapp.com",
@@ -133,7 +134,6 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
-        // Перемикання вкладок
         window.switchTab = function(tabId) {
             document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
             document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
@@ -141,7 +141,6 @@
             document.getElementById(tabId).classList.add('active');
         }
 
-        // ЗАВАНТАЖЕННЯ ЗАПИСІВ
         async function loadBookings() {
             const tbody = document.getElementById('bookingsTable');
             try {
@@ -171,7 +170,6 @@
             } catch (e) { tbody.innerHTML = '<tr><td colspan="5">Помилка завантаження</td></tr>'; }
         }
 
-        // ОНОВЛЕННЯ СТАТУСУ
         window.updateStatus = async function(id, newStatus) {
             try {
                 await updateDoc(doc(db, "bookings", id), { status: newStatus });
@@ -179,7 +177,6 @@
             } catch (e) { alert('Помилка оновлення статусу'); }
         }
 
-        // ПОСЛУГИ
         async function loadServices() {
             const tbody = document.getElementById('servicesTable');
             try {
@@ -216,7 +213,6 @@
             } catch (e) { alert('Помилка видалення послуги'); }
         }
 
-        // ГОДИНИ
         async function loadHours() {
             try {
                 const docSnap = await getDoc(doc(db, "settings", "hours"));
@@ -235,7 +231,6 @@
             } catch (e) { alert('Помилка збереження'); }
         }
 
-        // НАЛАШТУВАННЯ КОНТАКТУ (НОВЕ)
         async function loadContact() {
             try {
                 const docSnap = await getDoc(doc(db, "settings", "contact"));
@@ -253,7 +248,6 @@
             } catch (e) { alert('Помилка збереження контакту'); }
         }
 
-        // Ініціалізація
         loadBookings();
         loadServices();
         loadHours();
