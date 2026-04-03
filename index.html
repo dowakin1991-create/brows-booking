@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>LYANA ZAHRAI | Оформлення запису</title>
     
-    <link rel="apple-touch-icon" href="IMG_9581.png">
-    <link rel="icon" type="image/png" href="IMG_9581.png">
-    <link rel="shortcut icon" href="IMG_9581.png">
+    <link rel="apple-touch-icon" href="IMG_9581.jpeg">
+    <link rel="icon" type="image/jpeg" href="IMG_9581.jpeg">
+    <link rel="shortcut icon" href="IMG_9581.jpeg">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Запис">
@@ -21,7 +21,7 @@
         /* ЕКРАН-ЗАСТАВКА */
         #splash-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: #ffffff; display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 1000; transition: opacity 0.4s var(--ease-out), visibility 0.4s; will-change: opacity, visibility; }
         #splash-screen.hidden { opacity: 0; visibility: hidden; }
-        #splash-logo { width: 150px; opacity: 0; animation: splashFadeIn 0.8s var(--ease-out) forwards; }
+        #splash-logo { width: 150px; opacity: 0; animation: splashFadeIn 0.8s var(--ease-out) forwards; border-radius: 50%; }
         @keyframes splashFadeIn { 0% { opacity: 0; transform: scale(0.95); } 100% { opacity: 1; transform: scale(1); } }
         #splash-screen h2 { font-weight: 600; font-size: 26px; margin-top: 25px; letter-spacing: -1px; text-transform: uppercase; opacity: 0; animation: splashFadeIn 0.8s var(--ease-out) 0.3s forwards; }
 
@@ -31,7 +31,7 @@
         
         /* ЗАГОЛОВОК */
         header { text-align: center; padding: 40px 20px 20px; border-bottom: 1px solid var(--border-color); background-color: #ffffff; }
-        .logo-header { max-width: 80px; margin-bottom: 15px; }
+        .logo-header { max-width: 80px; margin-bottom: 15px; border-radius: 50%; }
         .brand-name { font-weight: 600; font-size: 20px; letter-spacing: -0.5px; text-transform: uppercase; margin: 0; }
         .contact-info { font-size: 14px; color: #666; margin-top: 5px; }
         .contact-info a { color: inherit; text-decoration: none; font-weight: 500; }
@@ -60,13 +60,13 @@
 <body>
 
     <div id="splash-screen">
-        <img src="IMG_9581.png" alt="Logo" id="splash-logo">
+        <img src="IMG_9581.jpeg" alt="Logo" id="splash-logo">
         <h2>LYANA ZAHRAI</h2>
     </div>
 
     <div id="app-content">
         <header>
-            <img src="IMG_9581.png" alt="LYANA ZAHRAI" class="logo-header">
+            <img src="IMG_9581.jpeg" alt="LYANA ZAHRAI" class="logo-header">
             <h1 class="brand-name">LYANA ZAHRAI</h1>
             <div class="contact-info" id="admin-contact">Адміністрація: завантаження...</div>
         </header>
