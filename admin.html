@@ -15,35 +15,33 @@
 
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        /* ПРЕМІАЛЬНИЙ ЧОРНО-БІЛИЙ ДИЗАЙН */
         :root { --bg-color: #f8f9fa; --surface: #ffffff; --text-color: #111111; --text-muted: #666666; --border-color: #e5e5e5; --accent: #000000; --ease: cubic-bezier(0.25, 0.46, 0.45, 0.94); }
         body, html { margin: 0; padding: 0; font-family: 'Inter', sans-serif; background-color: var(--bg-color); color: var(--text-color); -webkit-font-smoothing: antialiased; -webkit-tap-highlight-color: transparent; }
         .admin-container { max-width: 600px; margin: 0 auto; padding: 20px; box-sizing: border-box; padding-top: max(20px, env(safe-area-inset-top)); }
         
-        /* ХЕДЕР */
         .header { display: flex; align-items: center; margin-bottom: 25px; gap: 15px; }
         .logo { width: 50px; border-radius: 50%; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
         h1 { font-weight: 700; font-size: 20px; margin: 0; text-transform: uppercase; letter-spacing: -0.5px; }
         
-        /* ВКЛАДКИ (Стиль iOS) */
         .tabs { display: flex; gap: 20px; margin-bottom: 25px; overflow-x: auto; padding-bottom: 2px; border-bottom: 1px solid var(--border-color); -webkit-overflow-scrolling: touch; }
         .tabs::-webkit-scrollbar { display: none; }
-        .tab { padding: 10px 4px; cursor: pointer; color: var(--text-muted); font-weight: 500; font-size: 15px; white-space: nowrap; border-bottom: 2px solid transparent; transition: color 0.2s var(--ease), border-color 0.2s var(--ease); }
+        .tab { position: relative; padding: 10px 4px; cursor: pointer; color: var(--text-muted); font-weight: 500; font-size: 15px; white-space: nowrap; border-bottom: 2px solid transparent; transition: 0.2s var(--ease); }
         .tab.active { color: var(--accent); border-bottom-color: var(--accent); font-weight: 600; }
         
-        /* СЕКЦІЇ */
+        /* ЧЕРВОНА ЦЯТОЧКА (ІНДИКАТОР) */
+        .badge-dot { display: none; width: 8px; height: 8px; background-color: #e74c3c; border-radius: 50%; position: absolute; top: 10px; right: -8px; }
+        .badge-dot.active { display: block; }
+        
         .section { display: none; will-change: opacity, transform; animation: sectionFadeIn 0.4s var(--ease); }
         @keyframes sectionFadeIn { 0% { opacity: 0; transform: translateY(10px); } 100% { opacity: 1; transform: translateY(0); } }
         .section.active { display: block; }
         
-        /* КАРТКИ ЗАПИСІВ (Замість таблиць) */
         .card { background: var(--surface); padding: 20px; border-radius: 12px; border: 1px solid var(--border-color); margin-bottom: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.02); }
         .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px solid #f0f0f0; }
         .card-datetime { font-weight: 600; font-size: 15px; }
         
-        /* СТАТУСИ */
         .badge { padding: 6px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
-        .badge-pending { background-color: #f9f9f9; color: #888; border: 1px solid #ddd; }
+        .badge-pending { background-color: #f9f9f9; color: #e67e22; border: 1px solid #f39c12; }
         .badge-confirmed { background-color: var(--accent); color: #fff; }
         .badge-cancelled { background-color: #fff; color: var(--text-muted); text-decoration: line-through; border: 1px dashed #ccc; }
         
@@ -51,22 +49,23 @@
         .card-detail span { color: var(--text-muted); }
         .card-detail strong { font-weight: 500; text-align: right; }
         .card-detail a { color: var(--accent); text-decoration: none; font-weight: 600; }
+        .card-comment { background: #f9f9f9; padding: 10px; border-radius: 6px; font-size: 13px; color: #444; margin-top: 10px; border-left: 3px solid #ccc; font-style: italic; }
         
-        /* КНОПКИ ДІЙ */
         .actions-group { display: flex; gap: 10px; margin-top: 20px; }
         button { flex: 1; padding: 14px; border: none; border-radius: 8px; cursor: pointer; font-family: 'Inter'; font-weight: 600; font-size: 14px; transition: transform 0.1s var(--ease), opacity 0.2s; }
         button:active { transform: scale(0.98); }
         .btn-black { background: var(--accent); color: white; }
         .btn-black:hover { opacity: 0.9; }
         .btn-outline { background: transparent; color: var(--accent); border: 1px solid var(--border-color); }
-        .btn-outline:hover { border-color: var(--accent); }
         .btn-danger { color: #d63031; border-color: #ffdbdb; background: #fff5f5; }
         
-        /* ФОРМИ ДОДАВАННЯ */
         .input-group { display: flex; flex-direction: column; gap: 12px; margin-bottom: 25px; background: var(--surface); padding: 20px; border-radius: 12px; border: 1px solid var(--border-color); }
         .input-group label { font-size: 12px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; }
         input { padding: 14px; border: 1px solid var(--border-color); border-radius: 8px; width: 100%; font-family: 'Inter'; font-size: 15px; box-sizing: border-box; background: #fafafa; transition: border-color 0.2s; }
         input:focus { border-color: var(--accent); outline: none; background: #fff; }
+        
+        .date-chip { background: #eeeeee; padding: 8px 12px; border-radius: 20px; font-size: 13px; font-weight: 500; display: inline-flex; align-items: center; gap: 8px; }
+        .date-chip span { cursor: pointer; color: #e74c3c; font-weight: bold; font-size: 16px; line-height: 1; }
         
         .empty-state { text-align: center; padding: 40px 20px; color: var(--text-muted); font-size: 14px; }
     </style>
@@ -80,28 +79,25 @@
         </div>
 
         <div class="tabs">
-            <div class="tab active" onclick="switchTab('bookings')">Записи клієнтів</div>
-            <div class="tab" onclick="switchTab('services')">Прайс послуг</div>
-            <div class="tab" onclick="switchTab('hours')">Графік роботи</div>
+            <div class="tab active" onclick="switchTab('requests')">Запити <div class="badge-dot" id="pendingDot"></div></div>
+            <div class="tab" onclick="switchTab('schedule')">Розклад</div>
+            <div class="tab" onclick="switchTab('services')">Прайс</div>
+            <div class="tab" onclick="switchTab('hours')">Графік</div>
             <div class="tab" onclick="switchTab('settings')">Налаштування</div>
         </div>
 
-        <div id="bookings" class="section active">
-            <div id="bookingsList">
-                <div class="empty-state">Завантаження записів...</div>
-            </div>
+        <div id="requests" class="section active">
+            <div id="requestsList"><div class="empty-state">Завантаження запитів...</div></div>
+        </div>
+
+        <div id="schedule" class="section">
+            <div id="scheduleList"><div class="empty-state">Завантаження розкладу...</div></div>
         </div>
 
         <div id="services" class="section">
             <div class="input-group">
-                <div>
-                    <label>Назва послуги</label>
-                    <input type="text" id="newServiceName" placeholder="Напр. Корекція брів">
-                </div>
-                <div>
-                    <label>Ціна (грн)</label>
-                    <input type="number" id="newServicePrice" placeholder="400">
-                </div>
+                <div><label>Назва послуги</label><input type="text" id="newServiceName" placeholder="Напр. Корекція брів"></div>
+                <div><label>Ціна (грн)</label><input type="number" id="newServicePrice" placeholder="400"></div>
                 <button class="btn-black" onclick="addService()">Додати послугу</button>
             </div>
             <div id="servicesList"></div>
@@ -109,10 +105,18 @@
 
         <div id="hours" class="section">
             <div class="input-group">
-                <label>Доступні години для запису</label>
+                <label>Доступні години для запису (через кому)</label>
                 <input type="text" id="hoursInput" placeholder="10:00, 11:30, 13:00...">
-                <button class="btn-black" onclick="saveHours()">Зберегти графік</button>
             </div>
+            <div class="input-group">
+                <label>Додати робочий день</label>
+                <div style="display: flex; gap: 10px;">
+                    <input type="date" id="newWorkingDate">
+                    <button class="btn-black" style="flex: none; padding: 0 20px;" onclick="addWorkingDate()">+</button>
+                </div>
+                <div id="workingDatesList" style="display: flex; flex-wrap: wrap; gap: 8px; margin-top: 15px;"></div>
+            </div>
+            <button class="btn-black" style="width: 100%;" onclick="saveScheduleSettings()">Зберегти весь графік</button>
         </div>
 
         <div id="settings" class="section">
@@ -126,8 +130,9 @@
     </div>
 
     <script type="module">
+        // Додано імпорт onSnapshot для живого прослуховування бази даних
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
-        import { getFirestore, collection, getDocs, orderBy, query, doc, updateDoc, addDoc, deleteDoc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore.js";
+        import { getFirestore, collection, doc, updateDoc, addDoc, deleteDoc, setDoc, getDoc, getDocs, onSnapshot } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyC6MUwETUwJzJlp5YEH4fMR_GmDe5GFhoM",
@@ -141,7 +146,6 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
-        // Перемикання вкладок
         window.switchTab = function(tabId) {
             document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
             document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
@@ -149,143 +153,186 @@
             document.getElementById(tabId).classList.add('active');
         }
 
-        // ЗАВАНТАЖЕННЯ ЗАПИСІВ (Формат Карток)
-        async function loadBookings() {
-            const container = document.getElementById('bookingsList');
-            try {
-                const q = query(collection(db, "bookings"), orderBy("date", "desc"));
-                const snapshot = await getDocs(q);
-                container.innerHTML = '';
-                
-                if(snapshot.empty) {
-                    container.innerHTML = '<div class="empty-state">Поки немає жодного запису</div>';
-                    return;
-                }
+        // --- ЖИВЕ ПРОСЛУХОВУВАННЯ ЗАПИСІВ (AUTO-UPDATE) ---
+        function subscribeToBookings() {
+            const bookingsCol = collection(db, "bookings");
+            
+            // onSnapshot автоматично викликає цей код при будь-якій зміні в базі
+            onSnapshot(bookingsCol, (snapshot) => {
+                let allBookings = [];
+                snapshot.forEach(doc => allBookings.push({id: doc.id, ...doc.data()}));
 
-                snapshot.forEach(doc => {
-                    const d = doc.data();
-                    
-                    let badgeClass = d.status === 'pending' ? 'badge-pending' : d.status === 'confirmed' ? 'badge-confirmed' : 'badge-cancelled';
-                    let statusLabel = d.status === 'pending' ? 'Очікує' : d.status === 'confirmed' ? 'Підтверджено' : 'Скасовано';
-                    
-                    let actionsHtml = '';
+                // 1. СЕКЦІЯ "ЗАПИТИ": Сортування від найсвіжіших
+                let requests = [...allBookings].sort((a,b) => {
+                    let timeA = a.timestamp ? (a.timestamp.toMillis ? a.timestamp.toMillis() : 0) : 0;
+                    let timeB = b.timestamp ? (b.timestamp.toMillis ? b.timestamp.toMillis() : 0) : 0;
+                    return timeB - timeA;
+                });
+
+                // Перевірка на індикатор (червона цяточка)
+                let hasPending = requests.some(r => r.status === 'pending');
+                document.getElementById('pendingDot').classList.toggle('active', hasPending);
+
+                renderCards('requestsList', requests, true);
+
+                // 2. СЕКЦІЯ "РОЗКЛАД": Тільки підтверджені, сортування хронологічно
+                let confirmedSchedule = allBookings.filter(b => b.status === 'confirmed').sort((a,b) => {
+                    let cmp = a.date.localeCompare(b.date);
+                    if (cmp !== 0) return cmp;
+                    return a.time.localeCompare(b.time);
+                });
+
+                renderCards('scheduleList', confirmedSchedule, false);
+            }, (error) => {
+                console.error("Помилка живого оновлення: ", error);
+            });
+        }
+
+        // Рендер карток
+        function renderCards(containerId, dataArray, showActions) {
+            const container = document.getElementById(containerId);
+            container.innerHTML = '';
+            
+            if(dataArray.length === 0) {
+                container.innerHTML = '<div class="empty-state">Поки немає записів</div>';
+                return;
+            }
+
+            dataArray.forEach(d => {
+                let badgeClass = d.status === 'pending' ? 'badge-pending' : d.status === 'confirmed' ? 'badge-confirmed' : 'badge-cancelled';
+                let statusLabel = d.status === 'pending' ? 'Очікує' : d.status === 'confirmed' ? 'Підтверджено' : 'Скасовано';
+                
+                let commentHtml = d.comment ? `<div class="card-comment">"${d.comment}"</div>` : '';
+                
+                let actionsHtml = '';
+                if (showActions) {
                     if (d.status === 'pending') {
                         actionsHtml = `
                             <div class="actions-group">
-                                <button class="btn-outline" onclick="updateStatus('${doc.id}', 'cancelled')">Скасувати</button>
-                                <button class="btn-black" onclick="updateStatus('${doc.id}', 'confirmed')">Підтвердити</button>
+                                <button class="btn-outline" onclick="updateStatus('${d.id}', 'cancelled')">Скасувати</button>
+                                <button class="btn-black" onclick="updateStatus('${d.id}', 'confirmed')">Підтвердити</button>
                             </div>`;
                     } else if (d.status === 'confirmed') {
                         actionsHtml = `
                             <div class="actions-group">
-                                <button class="btn-outline btn-danger" onclick="updateStatus('${doc.id}', 'cancelled')">Скасувати запис</button>
+                                <button class="btn-outline btn-danger" onclick="updateStatus('${d.id}', 'cancelled')">Скасувати запис</button>
                             </div>`;
                     }
+                }
 
-                    container.innerHTML += `
-                        <div class="card">
-                            <div class="card-header">
-                                <span class="card-datetime">${d.date} • ${d.time}</span>
-                                <span class="badge ${badgeClass}">${statusLabel}</span>
-                            </div>
-                            <div class="card-detail"><span>Клієнт:</span> <strong>${d.name}</strong></div>
-                            <div class="card-detail"><span>Телефон:</span> <a href="tel:${d.phone}">${d.phone}</a></div>
-                            <div class="card-detail"><span>Послуга:</span> <strong>${d.service}</strong></div>
-                            ${actionsHtml}
-                        </div>`;
-                });
-            } catch (e) { container.innerHTML = '<div class="empty-state">Помилка завантаження даних</div>'; }
+                container.innerHTML += `
+                    <div class="card">
+                        <div class="card-header">
+                            <span class="card-datetime">${d.date} • ${d.time}</span>
+                            <span class="badge ${badgeClass}">${statusLabel}</span>
+                        </div>
+                        <div class="card-detail"><span>Клієнт:</span> <strong>${d.name}</strong></div>
+                        <div class="card-detail"><span>Телефон:</span> <a href="tel:${d.phone}">${d.phone}</a></div>
+                        <div class="card-detail"><span>Послуга:</span> <strong>${d.service}</strong></div>
+                        ${commentHtml}
+                        ${actionsHtml}
+                    </div>`;
+            });
         }
 
+        // Оновлення статусу (Тепер не потрібно викликати loadAllBookings, бо onSnapshot зробить це сам)
         window.updateStatus = async function(id, newStatus) {
             try {
                 await updateDoc(doc(db, "bookings", id), { status: newStatus });
-                loadBookings();
             } catch (e) { alert('Помилка оновлення статусу'); }
         }
 
-        // ЗАВАНТАЖЕННЯ ПОСЛУГ (Формат Карток)
+        // ПОСЛУГИ
         async function loadServices() {
             const container = document.getElementById('servicesList');
             try {
                 const snapshot = await getDocs(collection(db, "services"));
                 container.innerHTML = '';
-                
-                if(snapshot.empty) {
-                    container.innerHTML = '<div class="empty-state">Додайте першу послугу</div>';
-                    return;
-                }
-
+                if(snapshot.empty) { container.innerHTML = '<div class="empty-state">Додайте послугу</div>'; return; }
                 snapshot.forEach(doc => {
                     const d = doc.data();
                     container.innerHTML += `
                         <div class="card" style="display: flex; justify-content: space-between; align-items: center; padding: 15px 20px;">
-                            <div>
-                                <div style="font-weight: 600; margin-bottom: 4px;">${d.name}</div>
-                                <div style="color: var(--text-muted); font-size: 14px;">${d.price} грн</div>
-                            </div>
+                            <div><div style="font-weight: 600;">${d.name}</div><div style="color: var(--text-muted); font-size: 14px;">${d.price} грн</div></div>
                             <button class="btn-outline btn-danger" style="flex: none; padding: 8px 12px; font-size: 12px; width: auto;" onclick="deleteService('${doc.id}')">Видалити</button>
                         </div>`;
                 });
-            } catch (e) { container.innerHTML = '<div class="empty-state">Помилка завантаження прайсу</div>'; }
+            } catch (e) {}
         }
-
         window.addService = async function() {
             const name = document.getElementById('newServiceName').value;
             const price = document.getElementById('newServicePrice').value;
             if(name && price) {
-                try {
-                    await addDoc(collection(db, "services"), { name, price: parseFloat(price) });
-                    document.getElementById('newServiceName').value = '';
-                    document.getElementById('newServicePrice').value = '';
-                    loadServices();
-                } catch (e) { alert('Помилка додавання послуги'); }
+                await addDoc(collection(db, "services"), { name, price: parseFloat(price) });
+                document.getElementById('newServiceName').value = '';
+                document.getElementById('newServicePrice').value = '';
+                loadServices();
             }
         }
-
         window.deleteService = async function(id) {
-            try {
-                await deleteDoc(doc(db, "services", id));
-                loadServices();
-            } catch (e) { alert('Помилка видалення послуги'); }
+            await deleteDoc(doc(db, "services", id));
+            loadServices();
         }
 
-        // ГОДИНИ
-        async function loadHours() {
+        // ГРАФІК ТА ДНІ
+        let currentWorkingDates = [];
+
+        async function loadScheduleSettings() {
             try {
-                const docSnap = await getDoc(doc(db, "settings", "hours"));
-                if (docSnap.exists()) { document.getElementById('hoursInput').value = docSnap.data().list.join(', '); }
+                const snap = await getDoc(doc(db, "settings", "schedule"));
+                if(snap.exists()) {
+                    document.getElementById('hoursInput').value = (snap.data().hours || []).join(', ');
+                    currentWorkingDates = snap.data().dates || [];
+                }
+                renderDatesList();
             } catch (e) {}
         }
 
-        window.saveHours = async function() {
-            const input = document.getElementById('hoursInput').value;
-            const hoursList = input.split(',').map(h => h.trim()).filter(h => h.length > 0);
+        window.addWorkingDate = function() {
+            const val = document.getElementById('newWorkingDate').value;
+            if(val && !currentWorkingDates.includes(val)) {
+                currentWorkingDates.push(val);
+                currentWorkingDates.sort();
+                renderDatesList();
+            }
+        }
+
+        window.removeWorkingDate = function(index) {
+            currentWorkingDates.splice(index, 1);
+            renderDatesList();
+        }
+
+        function renderDatesList() {
+            const container = document.getElementById('workingDatesList');
+            container.innerHTML = '';
+            currentWorkingDates.forEach((d, i) => {
+                container.innerHTML += `<div class="date-chip">${d} <span onclick="removeWorkingDate(${i})">×</span></div>`;
+            });
+        }
+
+        window.saveScheduleSettings = async function() {
+            const hoursList = document.getElementById('hoursInput').value.split(',').map(h=>h.trim()).filter(h=>h.length > 0);
             try {
-                await setDoc(doc(db, "settings", "hours"), { list: hoursList });
-                alert('Графік успішно збережено!');
-            } catch (e) { alert('Помилка збереження'); }
+                await setDoc(doc(db, "settings", "schedule"), { hours: hoursList, dates: currentWorkingDates });
+                alert('Графік успішно оновлено! Тепер клієнти зможуть обрати лише ці дати.');
+            } catch (e) { alert('Помилка збереження графіка'); }
         }
 
         // КОНТАКТИ
         async function loadContact() {
-            try {
-                const docSnap = await getDoc(doc(db, "settings", "contact"));
-                if (docSnap.exists()) { document.getElementById('contactPhoneInput').value = docSnap.data().phone; }
-            } catch (e) {}
+            const snap = await getDoc(doc(db, "settings", "contact"));
+            if(snap.exists()) document.getElementById('contactPhoneInput').value = snap.data().phone;
         }
-
         window.saveContact = async function() {
-            const input = document.getElementById('contactPhoneInput').value;
-            try {
-                await setDoc(doc(db, "settings", "contact"), { phone: input.trim() });
-                alert('Контактну інформацію оновлено!');
-            } catch (e) { alert('Помилка збереження контакту'); }
+            const phone = document.getElementById('contactPhoneInput').value.trim();
+            await setDoc(doc(db, "settings", "contact"), { phone });
+            alert('Контакт збережено');
         }
 
-        loadBookings();
+        // Ініціалізація
+        subscribeToBookings(); // Запускаємо живе оновлення
         loadServices();
-        loadHours();
+        loadScheduleSettings();
         loadContact();
     </script>
 </body>
