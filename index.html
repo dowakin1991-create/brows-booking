@@ -2,75 +2,114 @@
 <html lang="uk">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LYANA ZAHRAI | Запис</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>LYANA ZAHRAI | Оформлення запису</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
-        /* Преміальний чорно-білий дизайн з оптимізацією під 120Hz */
-        :root { --bg-color: #ffffff; --text-color: #111111; --border-color: #e5e5e5; --accent-color: #000000; --hover-bg: #f9f9f9; }
-        body { font-family: 'Inter', sans-serif; background-color: var(--bg-color); color: var(--text-color); display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; padding: 20px; box-sizing: border-box; -webkit-font-smoothing: antialiased; }
-        .booking-container { background-color: var(--bg-color); padding: 40px; border-radius: 0px; /* Гострі кути для строгості */ border: 1px solid var(--border-color); width: 100%; max-width: 420px; text-align: center; }
-        .logo-container { margin-bottom: 30px; }
-        .logo { max-width: 120px; border-radius: 50%; }
-        h2 { font-weight: 600; font-size: 22px; margin-bottom: 25px; letter-spacing: -0.5px; text-transform: uppercase; }
-        .form-group { margin-bottom: 20px; text-align: left; }
+        /* БАЗОВІ НАЛАШТУВАННЯ ТА ОПТИМІЗАЦІЯ ПІД 120Hz */
+        :root { --bg-color: #fcf8f8; --text-color: #111111; --border-color: #e5e5e5; --accent-color: #000000; --hover-bg: #f9f9f9; --ease-out: cubic-bezier(0.25, 0.46, 0.45, 0.94); /* Плавність 120Hz */ }
+        body, html { margin: 0; padding: 0; min-height: 100vh; font-family: 'Inter', sans-serif; background-color: var(--bg-color); color: var(--text-color); -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; -webkit-tap-highlight-color: transparent; overflow-x: hidden; }
+        
+        /* ЕКРАН-ЗАСТАВКА (СПЛАШ) */
+        #splash-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: #ffffff; display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 1000; transition: opacity 0.4s var(--ease-out), visibility 0.4s; will-change: opacity, visibility; }
+        #splash-screen.hidden { opacity: 0; visibility: hidden; }
+        #splash-logo { width: 150px; opacity: 0; animation: splashFadeIn 0.8s var(--ease-out) forwards; }
+        @keyframes splashFadeIn { 0% { opacity: 0; transform: scale(0.95); } 100% { opacity: 1; transform: scale(1); } }
+        #splash-screen h2 { font-weight: 600; font-size: 26px; margin-top: 25px; letter-spacing: -1px; text-transform: uppercase; opacity: 0; animation: splashFadeIn 0.8s var(--ease-out) 0.3s forwards; }
+
+        /* ОСНОВНИЙ КОНТЕНТ */
+        #app-content { opacity: 0; transition: opacity 0.4s var(--ease-out) 0.3s; will-change: opacity; }
+        #app-content.visible { opacity: 1; }
+        
+        /* ЗАГОЛОВОК СТОРІНКИ */
+        header { text-align: center; padding: 40px 20px 20px; border-bottom: 1px solid var(--border-color); background-color: #ffffff; }
+        .logo-header { max-width: 80px; margin-bottom: 15px; }
+        .brand-name { font-weight: 600; font-size: 20px; letter-spacing: -0.5px; text-transform: uppercase; margin: 0; }
+        .contact-info { font-size: 14px; color: #666; margin-top: 5px; }
+        .contact-info a { color: inherit; text-decoration: none; font-weight: 500; }
+
+        /* КОНТЕЙНЕР ФОРМИ */
+        .booking-container { display: flex; justify-content: center; padding: 30px 20px 50px; box-sizing: border-box; }
+        .booking-card { background-color: #ffffff; padding: 30px; border-radius: 4px; border: 1px solid var(--border-color); width: 100%; max-width: 400px; box-sizing: border-box; }
+        h2.form-title { font-weight: 600; font-size: 22px; margin-bottom: 25px; letter-spacing: -0.5px; text-transform: uppercase; text-align: center; }
+
+        /* ЕЛЕМЕНТИ ФОРМИ */
+        .form-group { margin-bottom: 18px; text-align: left; }
         label { display: block; margin-bottom: 8px; font-weight: 500; font-size: 13px; color: #555; text-transform: uppercase; letter-spacing: 0.5px; }
-        input, select { width: 100%; padding: 14px; border: 1px solid var(--border-color); background-color: var(--bg-color); color: var(--text-color); box-sizing: border-box; font-size: 15px; font-family: 'Inter', sans-serif; transition: border-color 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94); /* Плавність 120Hz */ will-change: border-color; }
+        input, select { width: 100%; padding: 14px; border: 1px solid var(--border-color); background-color: #ffffff; color: var(--text-color); box-sizing: border-box; font-size: 15px; font-family: 'Inter', sans-serif; transition: border-color 0.15s var(--ease-out); will-change: border-color; }
         input:focus, select:focus { border-color: var(--accent-color); outline: none; }
-        button { width: 100%; padding: 16px; background-color: var(--accent-color); color: #ffffff; border: none; font-size: 15px; font-weight: 600; font-family: 'Inter', sans-serif; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; margin-top: 15px; transition: transform 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94), background-color 0.2s; will-change: transform; }
-        button:hover { background-color: #333333; transform: translateY(-2px); }
-        button:active { transform: translateY(0); }
-        .success-message { display: none; text-align: center; color: var(--accent-color); font-weight: 500; padding: 30px 0; font-size: 15px; line-height: 1.5; }
-        option:disabled { color: #999; }
-        /* Анімація завантаження */
-        .loader { display: none; margin-top: 15px; font-size: 13px; color: #666; }
+        
+        /* КНОПКА */
+        button { width: 100%; padding: 16px; background-color: var(--accent-color); color: #ffffff; border: none; font-size: 15px; font-weight: 600; font-family: 'Inter', sans-serif; text-transform: uppercase; letter-spacing: 1.5px; cursor: pointer; margin-top: 10px; transition: background-color 0.1s var(--ease-out), transform 0.15s var(--ease-out); will-change: background-color, transform; }
+        button:hover { background-color: #333; }
+        button:active { transform: scale(0.99); background-color: #111; }
+        
+        /* ПОВІДОМЛЕННЯ ТА ЛОАДЕР */
+        .loader { display: none; margin-top: 15px; font-size: 13px; color: #666; text-align: center; }
+        .success-message { display: none; text-align: center; color: var(--accent-color); font-weight: 500; padding: 30px 10px; font-size: 16px; line-height: 1.6; border: 1px solid var(--border-color); background-color: #ffffff; border-radius: 4px; max-width: 400px; margin: 30px auto; width: 100%; }
+
+        @media (max-width: 400px) { .booking-card { padding: 20px; } }
     </style>
 </head>
 <body>
 
-    <div class="booking-container">
-        <div class="logo-container">
-            <img src="IMG_9581.png" alt="LYANA ZAHRAI" class="logo">
-        </div>
-        <h2>Оформлення запису</h2>
-        
-        <form id="bookingForm">
-            <div class="form-group">
-                <label for="name">Ім'я та прізвище</label>
-                <input type="text" id="name" placeholder="Введіть ваше ім'я" required>
+    <div id="splash-screen">
+        <img src="IMG_9581.png" alt="Logo" id="splash-logo">
+        <h2>LYANA ZAHRAI</h2>
+    </div>
+
+    <div id="app-content">
+        <header>
+            <img src="IMG_9581.png" alt="LYANA ZAHRAI" class="logo-header">
+            <h1 class="brand-name">LYANA ZAHRAI</h1>
+            <div class="contact-info" id="admin-contact">Адміністрація: завантаження...</div>
+        </header>
+
+        <div class="booking-container">
+            <div class="booking-card" id="bookingFormCard">
+                <h2 class="form-title">Оформлення запису</h2>
+                
+                <form id="bookingForm">
+                    <div class="form-group">
+                        <label for="name">Ім'я та прізвище</label>
+                        <input type="text" id="name" placeholder="Введіть ваше ім'я" required autocomplete="name">
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Контактний номер</label>
+                        <input type="tel" id="phone" placeholder="+38 (000) 000-00-00" required autocomplete="tel">
+                    </div>
+                    <div class="form-group">
+                        <label for="service">Послуга</label>
+                        <select id="service" required>
+                            <option value="" disabled selected>Завантаження послуг...</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="date">Дата</label>
+                        <input type="date" id="date" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="time">Час</label>
+                        <select id="time" required disabled>
+                            <option value="" disabled selected>Спочатку оберіть дату</option>
+                        </select>
+                    </div>
+                    <button type="submit" id="submitBtn">Надіслати запит</button>
+                    <div class="loader" id="loader">Обробка запиту...</div>
+                </form>
             </div>
-            <div class="form-group">
-                <label for="phone">Контактний номер</label>
-                <input type="tel" id="phone" placeholder="+38 (000) 000-00-00" required>
+
+            <div id="successMessage" class="success-message">
+                Ваш запит на процедуру створено і невдовзі Уляна з Вами звʼяжеться.
             </div>
-            <div class="form-group">
-                <label for="service">Послуга</label>
-                <select id="service" required>
-                    <option value="" disabled selected>Завантаження послуг...</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="date">Дата</label>
-                <input type="date" id="date" required>
-            </div>
-            <div class="form-group">
-                <label for="time">Час</label>
-                <select id="time" required disabled>
-                    <option value="" disabled selected>Спочатку оберіть дату</option>
-                </select>
-            </div>
-            <button type="submit" id="submitBtn">Надіслати запит</button>
-            <div class="loader" id="loader">Обробка запиту...</div>
-        </form>
-        <div id="successMessage" class="success-message">
-            Ваш запит надіслано.<br><br>Адміністратор перевірить вільні години та підтвердить запис найближчим часом.
         </div>
     </div>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
-        import { getFirestore, collection, addDoc, query, where, getDocs } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore.js";
+        import { getFirestore, collection, addDoc, query, where, getDocs, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore.js";
 
+        // КОНФІГ Firebase (вже заповнений)
         const firebaseConfig = {
             apiKey: "AIzaSyC6MUwETUwJzJlp5YEH4fMR_GmDe5GFhoM",
             authDomain: "brows-bookin.firebaseapp.com",
@@ -83,75 +122,111 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
-        // НАЛАШТУВАННЯ TELEGRAM БОТА
-        const TELEGRAM_BOT_TOKEN = 'ВАШ_ТОКЕН_БОТА'; // Замініть на токен
-        const TELEGRAM_CHAT_ID = 'ВАШ_ID_ЧАТУ'; // Замініть на ваш ID
+        // TELEGRAM (замініть на реальні дані)
+        const TELEGRAM_BOT_TOKEN = 'ВАШ_ТОКЕН_БОТА';
+        const TELEGRAM_CHAT_ID = 'ВАШ_ID_ЧАТУ';
+
+        // КЕРУВАННЯ ЗАСТАВКОЮ
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.getElementById('splash-screen').classList.add('hidden');
+                document.getElementById('app-content').classList.add('visible');
+            }, 2000); // 2 секунди заставки
+        });
 
         const serviceSelect = document.getElementById('service');
         const dateInput = document.getElementById('date');
         const timeSelect = document.getElementById('time');
+        const contactInfo = document.getElementById('admin-contact');
 
-        // Завантаження послуг з бази
+        // ЗАВАНТАЖЕННЯ КОНТАКТУ
+        async function loadAdminContact() {
+            try {
+                const docSnap = await getDoc(doc(db, "settings", "contact"));
+                if (docSnap.exists() && docSnap.data().phone) {
+                    const phone = docSnap.data().phone;
+                    contactInfo.innerHTML = `Адміністрація: <a href="tel:${phone.replace(/\D/g,'')}">${phone}</a>`;
+                } else {
+                    contactInfo.innerHTML = `LYANA ZAHRAI Брови та Вії`;
+                }
+            } catch (e) {
+                contactInfo.innerHTML = `LYANA ZAHRAI Брови та Вії`;
+            }
+        }
+        loadAdminContact();
+
+        // ЗАВАНТАЖЕННЯ ПОСЛУГ
         async function loadServices() {
-            const q = query(collection(db, "services"));
-            const querySnapshot = await getDocs(q);
-            serviceSelect.innerHTML = '<option value="" disabled selected>Оберіть послугу</option>';
-            querySnapshot.forEach((doc) => {
-                const data = doc.data();
-                serviceSelect.innerHTML += `<option value="${data.name}">${data.name} — ${data.price} грн</option>`;
-            });
-            if(querySnapshot.empty) {
-                serviceSelect.innerHTML = '<option value="" disabled selected>Немає доступних послуг</option>';
+            try {
+                const q = query(collection(db, "services"));
+                const querySnapshot = await getDocs(q);
+                serviceSelect.innerHTML = '<option value="" disabled selected>Оберіть послугу</option>';
+                querySnapshot.forEach((doc) => {
+                    const data = doc.data();
+                    serviceSelect.innerHTML += `<option value="${data.name}">${data.name} — ${data.price} грн</option>`;
+                });
+                if(querySnapshot.empty) {
+                    serviceSelect.innerHTML = '<option value="" disabled selected>Немає доступних послуг</option>';
+                }
+            } catch (e) {
+                serviceSelect.innerHTML = '<option value="" disabled selected>Помилка завантаження</option>';
             }
         }
         loadServices();
 
-        // Завантаження робочих годин з бази
+        // РОБОЧІ ГОДИНИ
         let workingHours = [];
-        async function loadSettings() {
-            const q = query(collection(db, "settings"));
-            const querySnapshot = await getDocs(q);
-            querySnapshot.forEach((doc) => {
-                if(doc.id === 'hours') workingHours = doc.data().list || [];
-            });
+        async function loadHours() {
+            try {
+                const q = query(collection(db, "settings"));
+                const querySnapshot = await getDocs(q);
+                querySnapshot.forEach((doc) => {
+                    if(doc.id === 'hours') workingHours = doc.data().list || [];
+                });
+            } catch (e) {}
         }
-        loadSettings();
+        loadHours();
 
-        // Логіка перевірки годин
+        // ПЕРЕВІРКА ГОДИН
         dateInput.addEventListener('change', async function() {
             const selectedDate = this.value;
             timeSelect.disabled = true;
-            timeSelect.innerHTML = '<option value="" disabled selected>Перевірка вільних годин...</option>';
+            timeSelect.innerHTML = '<option value="" disabled selected>Перевірка...</option>';
 
             if (workingHours.length === 0) {
                 timeSelect.innerHTML = '<option value="" disabled selected>Графік не налаштовано</option>';
                 return;
             }
 
+            // Відновлюємо години
+            timeSelect.innerHTML = '<option value="" disabled selected>Оберіть вільний час</option>';
             workingHours.forEach(hour => {
                 timeSelect.innerHTML += `<option value="${hour}">${hour}</option>`;
             });
 
-            const q = query(collection(db, "bookings"), where("date", "==", selectedDate));
-            const querySnapshot = await getDocs(q);
-            
-            querySnapshot.forEach((doc) => {
-                const data = doc.data();
-                if(data.status !== 'cancelled') { // Блокуємо лише підтверджені або в очікуванні
-                    for (let i = 1; i < timeSelect.options.length; i++) {
-                        if (timeSelect.options[i].value === data.time) {
-                            timeSelect.options[i].disabled = true;
-                            timeSelect.options[i].text += " (Зайнято)";
+            // Шукаємо зайняті
+            try {
+                const q = query(collection(db, "bookings"), where("date", "==", selectedDate));
+                const querySnapshot = await getDocs(q);
+                
+                querySnapshot.forEach((doc) => {
+                    const data = doc.data();
+                    if(data.status !== 'cancelled') {
+                        for (let i = 1; i < timeSelect.options.length; i++) {
+                            if (timeSelect.options[i].value === data.time) {
+                                timeSelect.options[i].disabled = true;
+                                timeSelect.options[i].text += " (Зайнято)";
+                            }
                         }
                     }
-                }
-            });
-
-            timeSelect.disabled = false;
-            timeSelect.options[0].text = "Оберіть вільний час";
+                });
+                timeSelect.disabled = false;
+            } catch (e) {
+                timeSelect.innerHTML = '<option value="" disabled selected>Помилка</option>';
+            }
         });
 
-        // Відправка форми
+        // ВІДПРАВКА ФОРМИ
         document.getElementById('bookingForm').addEventListener('submit', async function(event) {
             event.preventDefault();
             document.getElementById('submitBtn').style.display = 'none';
@@ -163,16 +238,17 @@
                 service: document.getElementById('service').value,
                 date: document.getElementById('date').value,
                 time: document.getElementById('time').value,
-                status: 'pending', // Статус "В очікуванні"
+                status: 'pending',
                 timestamp: new Date()
             };
 
             try {
+                // Firebase
                 await addDoc(collection(db, "bookings"), bookingData);
                 
-                // Відправка в Telegram
+                // Telegram (опціонально)
                 if(TELEGRAM_BOT_TOKEN !== 'ВАШ_ТОКЕН_БОТА') {
-                    const msg = `🔔 *НОВИЙ ЗАПИТ НА ЗАПИС*\n\n👤 Клієнт: ${bookingData.name}\n📞 Тел: ${bookingData.phone}\n✂️ Послуга: ${bookingData.service}\n📅 Дата: ${bookingData.date}\n⏰ Час: ${bookingData.time}\n\nЗайдіть в панель адміністратора, щоб підтвердити або скасувати.`;
+                    const msg = `🔔 *НОВИЙ ЗАПИТ НА ЗАПИС*\n\n👤 Клієнт: ${bookingData.name}\n📞 Тел: ${bookingData.phone}\n✂️ Послуга: ${bookingData.service}\n📅 Дата: ${bookingData.date}\n⏰ Час: ${bookingData.time}`;
                     fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
                         method: 'POST',
                         headers: {'Content-Type': 'application/json'},
@@ -180,10 +256,14 @@
                     });
                 }
 
-                document.getElementById('bookingForm').style.display = 'none';
+                // Успіх
+                document.getElementById('bookingFormCard').style.display = 'none';
                 document.getElementById('successMessage').style.display = 'block';
+                
+                // Плавний скрол вгору
+                window.scrollTo({ top: 0, behavior: 'smooth' });
             } catch (e) {
-                alert("Виникла помилка. Спробуйте пізніше.");
+                alert("Помилка відправки. Спробуйте пізніше.");
                 document.getElementById('submitBtn').style.display = 'block';
                 document.getElementById('loader').style.display = 'none';
             }
