@@ -132,8 +132,9 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
-        const TELEGRAM_BOT_TOKEN = 'ВАШ_ТОКЕН_БОТА';
-        const TELEGRAM_CHAT_ID = 'ВАШ_ID_ЧАТУ';
+        // ВАШІ КЛЮЧІ ВЖЕ ТУТ!
+        const TELEGRAM_BOT_TOKEN = '8558025350:AAGW1s5yIXG9b3dMoFhIpzApWg3sPbprHr8';
+        const TELEGRAM_CHAT_ID = '796101934';
 
         window.addEventListener('load', () => {
             setTimeout(() => {
@@ -171,14 +172,14 @@
         }
         loadServices();
 
-        let scheduleDict = {}; // Зберігаємо години для кожного дня
+        let scheduleDict = {}; 
 
         async function loadSchedule() {
             try {
                 const snap = await getDoc(doc(db, "settings", "schedule"));
                 if (snap.exists()) {
                     scheduleDict = snap.data().days || {};
-                    const dates = Object.keys(scheduleDict).sort(); // Сортуємо дати
+                    const dates = Object.keys(scheduleDict).sort(); 
                     
                     dateSelect.innerHTML = '<option value="" disabled selected>Оберіть доступну дату</option>';
                     dates.forEach(d => { dateSelect.innerHTML += `<option value="${d}">${d}</option>`; });
@@ -194,7 +195,6 @@
             timeSelect.disabled = true;
             timeSelect.innerHTML = '<option value="" disabled selected>Перевірка...</option>';
 
-            // Беремо години саме для обраної дати
             const dayHoursStr = scheduleDict[selectedDate] || "";
             const hoursList = dayHoursStr.split(',').map(h=>h.trim()).filter(h=>h.length > 0);
 
