@@ -338,7 +338,6 @@
             if(dateVal && hoursVal) {
                 scheduleDict[dateVal] = hoursVal;
                 
-                // Одразу зберігаємо в базу
                 await setDoc(doc(db, "settings", "schedule"), { days: scheduleDict });
                 
                 document.getElementById('newWorkingDate').value = '';
