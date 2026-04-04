@@ -11,59 +11,61 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Запис">
-    <meta name="theme-color" content="#ffffff">
+    <meta name="theme-color" content="#fcfcfc">
 
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        :root { --bg-color: #fcf8f8; --text-color: #111111; --border-color: #e5e5e5; --accent-color: #000000; --ease-out: cubic-bezier(0.25, 0.46, 0.45, 0.94); }
-        body, html { margin: 0; padding: 0; min-height: 100vh; font-family: 'Inter', sans-serif; background-color: var(--bg-color); color: var(--text-color); -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; -webkit-tap-highlight-color: transparent; overflow-x: hidden; }
+        :root { --bg-color: #f2f2f7; --surface: #ffffff; --text-color: #1c1c1e; --text-muted: #8e8e93; --input-bg: #f2f2f7; --accent-color: #000000; --ease-out: cubic-bezier(0.25, 0.46, 0.45, 0.94); }
+        body, html { margin: 0; padding: 0; min-height: 100vh; font-family: 'Inter', sans-serif; background-color: var(--bg-color); color: var(--text-color); -webkit-font-smoothing: antialiased; -webkit-tap-highlight-color: transparent; }
         
-        #splash-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: #ffffff; display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 1000; transition: opacity 0.4s var(--ease-out), visibility 0.4s; will-change: opacity, visibility; }
+        #splash-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: #ffffff; display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 1000; transition: opacity 0.4s var(--ease-out), visibility 0.4s; }
         #splash-screen.hidden { opacity: 0; visibility: hidden; }
-        #splash-logo { width: 150px; opacity: 0; animation: splashFadeIn 0.8s var(--ease-out) forwards; border-radius: 50%; }
-        @keyframes splashFadeIn { 0% { opacity: 0; transform: scale(0.95); } 100% { opacity: 1; transform: scale(1); } }
-        #splash-screen h2 { font-weight: 600; font-size: 26px; margin-top: 25px; letter-spacing: -1px; text-transform: uppercase; opacity: 0; animation: splashFadeIn 0.8s var(--ease-out) 0.3s forwards; }
-
-        #app-content { opacity: 0; transition: opacity 0.4s var(--ease-out) 0.3s; will-change: opacity; }
+        #splash-logo { width: 140px; opacity: 0; animation: splashFadeIn 0.8s var(--ease-out) forwards; border-radius: 50%; box-shadow: 0 10px 30px rgba(0,0,0,0.08); }
+        @keyframes splashFadeIn { 0% { opacity: 0; transform: scale(0.9); } 100% { opacity: 1; transform: scale(1); } }
+        
+        #app-content { opacity: 0; transition: opacity 0.4s var(--ease-out) 0.3s; padding-bottom: 40px; }
         #app-content.visible { opacity: 1; }
         
-        header { text-align: center; padding: 40px 20px 20px; border-bottom: 1px solid var(--border-color); background-color: #ffffff; }
-        .logo-header { max-width: 80px; margin-bottom: 15px; border-radius: 50%; }
-        .brand-name { font-weight: 600; font-size: 20px; letter-spacing: -0.5px; text-transform: uppercase; margin: 0; }
-        .contact-info { font-size: 14px; color: #666; margin-top: 5px; }
-        .contact-info a { color: inherit; text-decoration: none; font-weight: 500; }
+        header { text-align: center; padding: 30px 20px 20px; }
+        .logo-header { max-width: 70px; margin-bottom: 12px; border-radius: 50%; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+        .brand-name { font-weight: 700; font-size: 20px; letter-spacing: -0.5px; text-transform: uppercase; margin: 0; }
+        .contact-info { font-size: 13px; color: var(--text-muted); margin-top: 5px; font-weight: 500; }
+        .contact-info a { color: var(--text-color); text-decoration: none; font-weight: 600; }
 
-        .booking-container { display: flex; justify-content: center; padding: 30px 20px 50px; box-sizing: border-box; }
-        .booking-card { background-color: #ffffff; padding: 30px; border-radius: 4px; border: 1px solid var(--border-color); width: 100%; max-width: 400px; box-sizing: border-box; }
-        h2.form-title { font-weight: 600; font-size: 22px; margin-bottom: 25px; letter-spacing: -0.5px; text-transform: uppercase; text-align: center; }
+        .booking-container { display: flex; justify-content: center; padding: 0 20px; }
+        .booking-card { background-color: var(--surface); padding: 30px 25px; border-radius: 24px; width: 100%; max-width: 400px; box-shadow: 0 8px 30px rgba(0,0,0,0.04); box-sizing: border-box; }
         
-        .form-group { margin-bottom: 18px; text-align: left; }
-        label { display: block; margin-bottom: 8px; font-weight: 500; font-size: 13px; color: #555; text-transform: uppercase; letter-spacing: 0.5px; }
-        input, select, textarea { width: 100%; padding: 14px; border: 1px solid var(--border-color); background-color: #ffffff; color: var(--text-color); box-sizing: border-box; font-size: 15px; font-family: 'Inter', sans-serif; transition: border-color 0.15s var(--ease-out); will-change: border-color; resize: none; }
-        input:focus, select:focus, textarea:focus { border-color: var(--accent-color); outline: none; }
+        h2.form-title { font-weight: 600; font-size: 18px; margin-top: 0; margin-bottom: 25px; text-align: center; color: var(--text-color); }
         
-        button { width: 100%; padding: 16px; background-color: var(--accent-color); color: #ffffff; border: none; font-size: 15px; font-weight: 600; font-family: 'Inter', sans-serif; text-transform: uppercase; letter-spacing: 1.5px; cursor: pointer; margin-top: 10px; transition: background-color 0.1s var(--ease-out), transform 0.15s var(--ease-out); will-change: background-color, transform; }
-        button:hover { background-color: #333; }
-        button:active { transform: scale(0.99); background-color: #111; }
+        .form-group { margin-bottom: 16px; text-align: left; }
+        label { display: block; margin-bottom: 6px; font-weight: 600; font-size: 12px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; padding-left: 4px; }
         
-        .loader { display: none; margin-top: 15px; font-size: 13px; color: #666; text-align: center; }
-        .success-message { display: none; text-align: center; color: var(--accent-color); font-weight: 500; padding: 30px 10px; font-size: 16px; line-height: 1.6; border: 1px solid var(--border-color); background-color: #ffffff; border-radius: 4px; max-width: 400px; margin: 30px auto; width: 100%; }
-
-        @media (max-width: 400px) { .booking-card { padding: 20px; } }
+        input, select, textarea { width: 100%; padding: 15px 16px; border: 2px solid transparent; background-color: var(--input-bg); color: var(--text-color); border-radius: 14px; box-sizing: border-box; font-size: 15px; font-family: 'Inter', sans-serif; transition: all 0.2s var(--ease-out); appearance: none; }
+        input:focus, select:focus, textarea:focus { border-color: var(--accent-color); background-color: var(--surface); outline: none; box-shadow: 0 4px 12px rgba(0,0,0,0.03); }
+        textarea { resize: none; height: 100px; }
+        
+        button { width: 100%; padding: 16px; background-color: var(--accent-color); color: #ffffff; border: none; border-radius: 14px; font-size: 16px; font-weight: 600; font-family: 'Inter', sans-serif; cursor: pointer; margin-top: 15px; transition: transform 0.1s var(--ease-out), opacity 0.2s; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        button:active { transform: scale(0.97); opacity: 0.9; }
+        
+        .loader { display: none; margin-top: 20px; font-size: 14px; color: var(--text-muted); text-align: center; font-weight: 500; }
+        
+        .success-message { display: none; text-align: center; padding: 40px 20px; background-color: var(--surface); border-radius: 24px; max-width: 400px; margin: 0 auto; box-shadow: 0 8px 30px rgba(0,0,0,0.04); }
+        .success-icon { font-size: 40px; margin-bottom: 15px; }
+        .success-title { font-size: 20px; font-weight: 700; margin-bottom: 10px; }
+        .success-text { font-size: 15px; color: var(--text-muted); line-height: 1.5; }
     </style>
 </head>
 <body>
 
     <div id="splash-screen">
         <img src="IMG_9581.jpeg" alt="Logo" id="splash-logo">
-        <h2>LYANA ZAHRAI</h2>
     </div>
 
     <div id="app-content">
         <header>
             <img src="IMG_9581.jpeg" alt="LYANA ZAHRAI" class="logo-header">
             <h1 class="brand-name">LYANA ZAHRAI</h1>
-            <div class="contact-info" id="admin-contact">Адміністрація: завантаження...</div>
+            <div class="contact-info" id="admin-contact">Завантаження...</div>
         </header>
 
         <div class="booking-container">
@@ -72,42 +74,44 @@
                 
                 <form id="bookingForm">
                     <div class="form-group">
-                        <label for="name">Ім'я та прізвище</label>
-                        <input type="text" id="name" placeholder="Введіть ваше ім'я" required autocomplete="name">
+                        <label>Ім'я та прізвище</label>
+                        <input type="text" id="name" placeholder="Напр. Анна" required autocomplete="name">
                     </div>
                     <div class="form-group">
-                        <label for="phone">Контактний номер</label>
+                        <label>Номер телефону</label>
                         <input type="tel" id="phone" placeholder="+38 (000) 000-00-00" required autocomplete="tel">
                     </div>
                     <div class="form-group">
-                        <label for="service">Послуга</label>
+                        <label>Послуга</label>
                         <select id="service" required>
-                            <option value="" disabled selected>Завантаження послуг...</option>
+                            <option value="" disabled selected>Завантаження...</option>
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="date">Доступні дати</label>
+                        <label>Оберіть дату</label>
                         <select id="date" required>
-                            <option value="" disabled selected>Завантаження розкладу...</option>
+                            <option value="" disabled selected>Завантаження графіка...</option>
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="time">Час</label>
+                        <label>Зручний час</label>
                         <select id="time" required disabled>
                             <option value="" disabled selected>Спочатку оберіть дату</option>
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="comment">Коментар (необов'язково)</label>
-                        <textarea id="comment" rows="2" placeholder="Ваші побажання..."></textarea>
+                        <label>Коментар (необов'язково)</label>
+                        <textarea id="comment" placeholder="Ваші побажання..."></textarea>
                     </div>
-                    <button type="submit" id="submitBtn">Надіслати запит</button>
-                    <div class="loader" id="loader">Обробка запиту...</div>
+                    <button type="submit" id="submitBtn">Записатися</button>
+                    <div class="loader" id="loader">Зачекайте, відправляємо...</div>
                 </form>
             </div>
 
             <div id="successMessage" class="success-message">
-                Ваш запит на процедуру створено і невдовзі Уляна з Вами звʼяжеться.
+                <div class="success-icon">✨</div>
+                <div class="success-title">Запит надіслано!</div>
+                <div class="success-text">Ваш запис створено. Невдовзі Уляна зв'яжеться з Вами для підтвердження.</div>
             </div>
         </div>
     </div>
@@ -135,7 +139,7 @@
             setTimeout(() => {
                 document.getElementById('splash-screen').classList.add('hidden');
                 document.getElementById('app-content').classList.add('visible');
-            }, 2000); 
+            }, 1500); 
         });
 
         const serviceSelect = document.getElementById('service');
@@ -148,9 +152,9 @@
                 const docSnap = await getDoc(doc(db, "settings", "contact"));
                 if (docSnap.exists() && docSnap.data().phone) {
                     const phone = docSnap.data().phone;
-                    contactInfo.innerHTML = `Адміністрація: <a href="tel:${phone.replace(/\D/g,'')}">${phone}</a>`;
-                } else { contactInfo.innerHTML = `LYANA ZAHRAI Брови`; }
-            } catch (e) { contactInfo.innerHTML = `LYANA ZAHRAI Брови`; }
+                    contactInfo.innerHTML = `Зв'язок: <a href="tel:${phone.replace(/\D/g,'')}">${phone}</a>`;
+                } else { contactInfo.innerHTML = `Брови`; }
+            } catch (e) { contactInfo.innerHTML = `Брови`; }
         }
         loadAdminContact();
 
@@ -163,26 +167,23 @@
                     const data = doc.data();
                     serviceSelect.innerHTML += `<option value="${data.name}">${data.name} — ${data.price} грн</option>`;
                 });
-                if(querySnapshot.empty) serviceSelect.innerHTML = '<option value="" disabled selected>Немає доступних послуг</option>';
-            } catch (e) { serviceSelect.innerHTML = '<option value="" disabled selected>Помилка завантаження</option>'; }
+            } catch (e) { }
         }
         loadServices();
 
-        let scheduleHours = [];
+        let scheduleDict = {}; // Зберігаємо години для кожного дня
+
         async function loadSchedule() {
             try {
                 const snap = await getDoc(doc(db, "settings", "schedule"));
                 if (snap.exists()) {
-                    const data = snap.data();
-                    scheduleHours = data.hours || [];
-                    const dates = data.dates || [];
+                    scheduleDict = snap.data().days || {};
+                    const dates = Object.keys(scheduleDict).sort(); // Сортуємо дати
                     
-                    dateSelect.innerHTML = '<option value="" disabled selected>Оберіть робочу дату</option>';
+                    dateSelect.innerHTML = '<option value="" disabled selected>Оберіть доступну дату</option>';
                     dates.forEach(d => { dateSelect.innerHTML += `<option value="${d}">${d}</option>`; });
                     
                     if(dates.length === 0) dateSelect.innerHTML = '<option value="" disabled selected>Немає вільних дат</option>';
-                } else {
-                    dateSelect.innerHTML = '<option value="" disabled selected>Графік формується</option>';
                 }
             } catch (e) {}
         }
@@ -193,20 +194,21 @@
             timeSelect.disabled = true;
             timeSelect.innerHTML = '<option value="" disabled selected>Перевірка...</option>';
 
-            if (scheduleHours.length === 0) {
-                timeSelect.innerHTML = '<option value="" disabled selected>Години не налаштовано</option>';
+            // Беремо години саме для обраної дати
+            const dayHoursStr = scheduleDict[selectedDate] || "";
+            const hoursList = dayHoursStr.split(',').map(h=>h.trim()).filter(h=>h.length > 0);
+
+            if (hoursList.length === 0) {
+                timeSelect.innerHTML = '<option value="" disabled selected>Немає вільних годин</option>';
                 return;
             }
 
             timeSelect.innerHTML = '<option value="" disabled selected>Оберіть вільний час</option>';
-            scheduleHours.forEach(hour => {
-                timeSelect.innerHTML += `<option value="${hour}">${hour}</option>`;
-            });
+            hoursList.forEach(hour => { timeSelect.innerHTML += `<option value="${hour}">${hour}</option>`; });
 
             try {
                 const q = query(collection(db, "bookings"), where("date", "==", selectedDate));
                 const querySnapshot = await getDocs(q);
-                
                 querySnapshot.forEach((doc) => {
                     const data = doc.data();
                     if(data.status !== 'cancelled') {
@@ -219,7 +221,7 @@
                     }
                 });
                 timeSelect.disabled = false;
-            } catch (e) { timeSelect.innerHTML = '<option value="" disabled selected>Помилка</option>'; }
+            } catch (e) {}
         });
 
         document.getElementById('bookingForm').addEventListener('submit', async function(event) {
@@ -241,18 +243,15 @@
 
             try {
                 await addDoc(collection(db, "bookings"), bookingData);
-                
                 if(TELEGRAM_BOT_TOKEN !== 'ВАШ_ТОКЕН_БОТА') {
                     let msg = `🔔 *НОВИЙ ЗАПИТ НА ЗАПИС*\n\n👤 Клієнт: ${bookingData.name}\n📞 Тел: ${bookingData.phone}\n✂️ Послуга: ${bookingData.service}\n📅 Дата: ${bookingData.date}\n⏰ Час: ${bookingData.time}`;
                     if(commentVal) msg += `\n💬 Коментар: ${commentVal}`;
-                    
                     fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
                         method: 'POST',
                         headers: {'Content-Type': 'application/json'},
                         body: JSON.stringify({ chat_id: TELEGRAM_CHAT_ID, text: msg, parse_mode: 'Markdown' })
                     });
                 }
-
                 document.getElementById('bookingFormCard').style.display = 'none';
                 document.getElementById('successMessage').style.display = 'block';
                 window.scrollTo({ top: 0, behavior: 'smooth' });
