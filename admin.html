@@ -174,7 +174,6 @@
             return dateStr;
         }
 
-        // Виправлена функція перемикання вкладок
         window.switchTab = function(tabId, element) {
             document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
             document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
@@ -182,7 +181,6 @@
             if(element) {
                 element.classList.add('active');
             } else {
-                // Якщо викликано кодом, шукаємо потрібну вкладку
                 const tabs = document.querySelectorAll('.tab');
                 tabs.forEach(t => {
                     if(t.getAttribute('onclick').includes(tabId)) t.classList.add('active');
@@ -205,18 +203,18 @@
 
                 let hasPending = requests.some(r => r.status === 'pending');
                 document.getElementById('pendingDot').classList.toggle('active', hasPending);
-                renderCards('requestsList', requests, true);
+                renderCards('requestsList', requests);
 
                 let confirmedSchedule = allBookings.filter(b => b.status === 'confirmed').sort((a,b) => {
                     let cmp = a.date.localeCompare(b.date);
                     if (cmp !== 0) return cmp;
                     return a.time.localeCompare(b.time);
                 });
-                renderCards('scheduleList', confirmedSchedule, false);
+                renderCards('scheduleList', confirmedSchedule);
             });
         }
 
-        function renderCards(containerId, dataArray, showActions) {
+        function renderCards(containerId, dataArray) {
             const container = document.getElementById(containerId);
             container.innerHTML = '';
             
@@ -231,19 +229,23 @@
                 let commentHtml = d.comment ? `<div class="card-comment">"${d.comment}"</div>` : '';
                 
                 let actionsHtml = '';
-                if (showActions) {
-                    if (d.status === 'pending') {
-                        actionsHtml = `
-                            <div class="actions-group">
-                                <button class="btn-outline" onclick="updateStatus('${d.id}', 'cancelled')">Скасувати</button>
-                                <button class="btn-black" onclick="updateStatus('${d.id}', 'confirmed')">Підтвердити</button>
-                            </div>`;
-                    } else if (d.status === 'confirmed') {
-                        actionsHtml = `
-                            <div class="actions-group">
-                                <button class="btn-outline btn-danger" onclick="updateStatus('${d.id}', 'cancelled')">Скасувати запис</button>
-                            </div>`;
-                    }
+                
+                if (d.status === 'pending') {
+                    actionsHtml = `
+                        <div class="actions-group">
+                            <button class="btn-outline" onclick="updateStatus('${d.id}', 'cancelled')">Скасувати</button>
+                            <button class="btn-black" onclick="updateStatus('${d.id}', 'confirmed')">Підтвердити</button>
+                        </div>
+                        <button class="btn-outline btn-danger" style="margin-top: 10px; width: 100%; padding: 10px;" onclick="deleteBooking('${d.id}')">Видалити назавжди</button>`;
+                } else if (d.status === 'confirmed') {
+                    actionsHtml = `
+                        <div class="actions-group">
+                            <button class="btn-outline" onclick="updateStatus('${d.id}', 'cancelled')">Скасувати</button>
+                            <button class="btn-outline btn-danger" onclick="deleteBooking('${d.id}')">Видалити</button>
+                        </div>`;
+                } else if (d.status === 'cancelled') {
+                    actionsHtml = `
+                        <button class="btn-outline btn-danger" style="margin-top: 15px; width: 100%;" onclick="deleteBooking('${d.id}')">Видалити назавжди</button>`;
                 }
 
                 container.innerHTML += `
@@ -265,6 +267,17 @@
             await updateDoc(doc(db, "bookings", id), { status: newStatus });
         }
 
+        // ВИДАЛЕННЯ ЗАПИСУ НАЗАВЖДИ
+        window.deleteBooking = async function(id) {
+            if(confirm("Ви впевнені, що хочете назавжди видалити цей запис?")) {
+                try {
+                    await deleteDoc(doc(db, "bookings", id));
+                } catch (e) {
+                    alert("Помилка видалення: " + e.message);
+                }
+            }
+        }
+
         // АДМІН ДОДАЄ ЗАПИС
         window.adminAddBooking = async function() {
             const name = document.getElementById('adminNewName').value;
@@ -284,7 +297,7 @@
                     name: name,
                     phone: phone,
                     service: service,
-                    date: date, // Зберігаємо як Рік-Місяць-День для ідеального сортування
+                    date: date,
                     time: time,
                     comment: comment || 'Записано адміністратором',
                     status: 'confirmed',
@@ -298,7 +311,6 @@
                 document.getElementById('adminNewTime').value = '';
                 document.getElementById('adminNewComment').value = '';
                 
-                // Перемикання без помилки
                 switchTab('schedule', null);
             } catch (e) { 
                 alert("Виникла помилка: " + e.message); 
