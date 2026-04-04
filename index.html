@@ -132,9 +132,16 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
-        // ВАШІ КЛЮЧІ ВЖЕ ТУТ!
         const TELEGRAM_BOT_TOKEN = '8558025350:AAGW1s5yIXG9b3dMoFhIpzApWg3sPbprHr8';
         const TELEGRAM_CHAT_ID = '796101934';
+
+        // Форматування дати ДД.ММ.РРРР
+        function formatDate(dateStr) {
+            if (!dateStr) return '';
+            const parts = dateStr.split('-');
+            if (parts.length === 3) return `${parts[2]}.${parts[1]}.${parts[0]}`;
+            return dateStr;
+        }
 
         window.addEventListener('load', () => {
             setTimeout(() => {
@@ -182,7 +189,7 @@
                     const dates = Object.keys(scheduleDict).sort(); 
                     
                     dateSelect.innerHTML = '<option value="" disabled selected>Оберіть доступну дату</option>';
-                    dates.forEach(d => { dateSelect.innerHTML += `<option value="${d}">${d}</option>`; });
+                    dates.forEach(d => { dateSelect.innerHTML += `<option value="${d}">${formatDate(d)}</option>`; });
                     
                     if(dates.length === 0) dateSelect.innerHTML = '<option value="" disabled selected>Немає вільних дат</option>';
                 }
@@ -244,7 +251,7 @@
             try {
                 await addDoc(collection(db, "bookings"), bookingData);
                 if(TELEGRAM_BOT_TOKEN !== 'ВАШ_ТОКЕН_БОТА') {
-                    let msg = `🔔 *НОВИЙ ЗАПИТ НА ЗАПИС*\n\n👤 Клієнт: ${bookingData.name}\n📞 Тел: ${bookingData.phone}\n✂️ Послуга: ${bookingData.service}\n📅 Дата: ${bookingData.date}\n⏰ Час: ${bookingData.time}`;
+                    let msg = `🔔 *НОВИЙ ЗАПИТ НА ЗАПИС*\n\n👤 Клієнт: ${bookingData.name}\n📞 Тел: ${bookingData.phone}\n✂️ Послуга: ${bookingData.service}\n📅 Дата: ${formatDate(bookingData.date)}\n⏰ Час: ${bookingData.time}`;
                     if(commentVal) msg += `\n💬 Коментар: ${commentVal}`;
                     fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
                         method: 'POST',
